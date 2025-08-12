@@ -1,0 +1,62 @@
+---
+layout: base
+pagination:
+  data: plan.weeks
+  size: 1
+  alias: w
+permalink: "/week/{{ w.weekNumber }}/"
+---
+{% assign week = w %}
+<h1>Week {{ week.weekNumber }}</h1>
+
+<div class="grid week-view">
+  {% for d in week.days %}
+  <div class="card" id="day-{{ d.day }}">
+    <div class="card-header">
+      <strong>Day {{ d.day }}</strong>
+      <a class="btn" href="/day/{{ d.day }}/">Go to Day</a>
+    </div>
+    <div class="card-content">
+      <section>
+        <h2>Old Testament</h2>
+        {% if d.otReadings.size > 0 %}
+          <ul>
+            {% for ref in d.otReadings %}
+              <li>{{ ref }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="muted">No OT reading.</p>
+        {% endif %}
+      </section>
+      <section>
+        <h2>New Testament</h2>
+        {% if d.ntReadings.size > 0 %}
+          <ul>
+            {% for ref in d.ntReadings %}
+              <li>{{ ref }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="muted">No NT reading.</p>
+        {% endif %}
+      </section>
+      {% if d.videos and d.videos.size > 0 %}
+      <section>
+        <h2>Videos</h2>
+        <p class="muted">🎬 This day has videos. <a href="/day/{{ d.day }}/">Open the day</a> to watch.</p>
+      </section>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="nav">
+  <div>
+    {% if week.weekNumber > 1 %}<a href="/week/{{ week.weekNumber | minus: 1 }}/">← Previous Week</a>{% endif %}
+  </div>
+  <div>
+    {% if week.weekNumber < 53 %}<a href="/week/{{ week.weekNumber | plus: 1 }}/">Next Week →</a>{% endif %}
+  </div>
+</div>
