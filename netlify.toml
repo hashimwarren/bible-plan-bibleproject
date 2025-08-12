@@ -1,0 +1,6 @@
+[build]
+  command = "npm run build:combined && npm run site:build"
+  publish = "_site"
+
+[build.environment]
+  NODE_VERSION = "20"

@@ -105,3 +105,6 @@ playwright-report/
 playwright/.cache/
 
 test-results/
+
+# Local Netlify folder
+.netlify/
