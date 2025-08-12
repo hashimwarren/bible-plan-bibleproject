@@ -1,0 +1,22 @@
+---
+permalink: "/feed.xml"
+layout: null
+---
+{% assign items = plan.days | slice: 0, 20 %}
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+  <channel>
+    <title>{{ site.title }}</title>
+    <link>{{ site.url }}</link>
+    <description>{{ site.description }}</description>
+    {% for d in items %}
+    <item>
+      <title>Day {{ d.day }}</title>
+      <link>{{ site.url }}/day/{{ d.day }}/</link>
+      <guid>{{ site.url }}/day/{{ d.day }}/</guid>
+      <pubDate>{{ "now" | date: "%a, %d %b %Y %H:%M:%S %z" }}</pubDate>
+      <description><![CDATA[ OT: {{ d.otReadings | join: ", " }} | NT: {{ d.ntReadings | join: ", " }} ]]></description>
+    </item>
+    {% endfor %}
+  </channel>
+</rss>

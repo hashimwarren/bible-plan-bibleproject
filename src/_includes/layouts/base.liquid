@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" class="h-full antialiased">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if title %}{{ title }} · {% endif %}{{ site.title | default: "BibleProject Reading Plans" }}</title>
+  <meta name="description" content="{{ description | default: site.description }}">
+  <meta name="theme-color" content="#0b6efd">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["ui-sans-serif","system-ui","-apple-system","Segoe UI","Roboto","Helvetica Neue","Arial","Noto Sans","Apple Color Emoji","Segoe UI Emoji"],
+          },
+          maxWidth: { 'content': '56rem' },
+        }
+      }
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+</head>
+<body class="min-h-full bg-slate-50 text-slate-800 leading-relaxed selection:bg-blue-100 selection:text-slate-900">
+  <header class="sticky top-0 z-50 bg-slate-900/90 supports-[backdrop-filter]:bg-slate-900/80 backdrop-blur text-white border-b border-slate-800/60">
+    <div class="mx-auto max-w-content px-4 py-3 flex items-center gap-3">
+      <a href="/" class="font-semibold tracking-tight text-white hover:text-blue-200 transition-colors">BibleProject Plans</a>
+      <span class="text-slate-300">· OT + NT with videos</span>
+      <nav class="ml-auto flex items-center gap-4 text-sm">
+        <a class="text-slate-300 hover:text-white transition-colors" href="/">Home</a>
+        <a class="text-slate-300 hover:text-white transition-colors" href="/weeks/">Weeks</a>
+        <a class="inline-flex items-center gap-1 rounded-md bg-blue-600/90 px-2.5 py-1.5 text-white text-xs font-medium hover:bg-blue-500 transition-colors" href="/day/1/">Start</a>
+      </nav>
+    </div>
+  </header>
+  <main class="mx-auto max-w-content px-4 py-8 md:py-10">
+    {{ content }}
+  </main>
+  <footer class="mt-8 border-t border-slate-200">
+    <div class="mx-auto max-w-content px-4 py-6 text-xs text-slate-500 flex items-center justify-between">
+      <p>Built with Eleventy · Scripture data from BibleProject plans</p>
+      <a class="hover:text-slate-700 transition-colors" href="/">Back to top</a>
+    </div>
+  </footer>
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>

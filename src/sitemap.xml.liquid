@@ -1,0 +1,15 @@
+---
+permalink: "/sitemap.xml"
+layout: null
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>{{ site.url }}/</loc></url>
+  <url><loc>{{ site.url }}/weeks/</loc></url>
+  {% for d in plan.days %}
+  <url><loc>{{ site.url }}/day/{{ d.day }}/</loc></url>
+  {% endfor %}
+  {% for w in plan.weeks %}
+  <url><loc>{{ site.url }}/week/{{ w.weekNumber }}/</loc></url>
+  {% endfor %}
+</urlset>

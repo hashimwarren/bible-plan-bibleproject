@@ -56,3 +56,263 @@ Examples (bash.exe):
 - `scrapePlan.js` (scraping and parsing logic)
 - `scripts/merge_csv.js` (CSV merge contract)
 - `old-testament-reading-plan.csv` (data shape and headers)
+
+# GitHub Copilot Instructions for Eleventy + Liquid
+
+## Tech Stack Overview
+This project uses Eleventy (11ty) as a static site generator with Liquid as the primary template language.
+
+## Project Structure and Conventions
+
+### Directory Structure
+Use standard Eleventy conventions:
+- `src/` for source files
+- `_includes/` for layout templates and partials
+- `_data/` for global data files
+- `_site/` for built output (auto-generated)
+- `eleventy.config.js` or `.eleventy.js` for configuration
+
+### File Naming
+- Use kebab-case for file names: `blog-post.liquid`, `author-bio.liquid`
+- Template files should use `.liquid` extension
+- Markdown content files should use `.md` extension with front matter
+- Data files should be JSON, YAML, or JS in the `_data` directory
+
+## Liquid Template Guidelines
+
+### Template Syntax
+- Use `{% %}` for logic (loops, conditionals, assignments)
+- Use `{{ }}` for output/variables
+- Use `{%- -%}` for whitespace control when needed
+- Prefer semantic HTML5 elements
+
+### Variable Naming
+- Use snake_case for Liquid variables: `{{ page.title }}`, `{{ site.author_name }}`
+- Use descriptive names that clearly indicate content type
+- Follow Eleventy's built-in variable conventions (page, collections, etc.)
+
+### Conditional Logic
+```liquid
+{% if condition %}
+  <!-- content -->
+{% elsif another_condition %}
+  <!-- content -->
+{% else %}
+  <!-- fallback -->
+{% endif %}
+```
+
+### Loops and Iteration
+```liquid
+{% for item in collections.posts %}
+  <!-- item content -->
+{% endfor %}
+
+{% for item in collections.posts limit: 5 %}
+  <!-- limited loop -->
+{% endfor %}
+```
+
+### Filters
+- Use built-in Liquid filters: `{{ content | strip_html }}`, `{{ date | date: "%Y-%m-%d" }}`
+- Chain filters when appropriate: `{{ title | slugify | prepend: "/blog/" }}`
+- Prefer Eleventy's custom filters when available
+
+## Eleventy Best Practices
+
+### Configuration
+- Use `eleventy.config.js` for modern configuration
+- Add custom filters, shortcodes, and transforms in the config file
+- Set up proper input/output directories
+- Configure template formats explicitly
+
+### Collections
+- Create meaningful collections using tags or custom functions
+- Sort collections by date (descending for posts): `collections.posts.reverse()`
+- Use collection data for navigation and related content
+
+### Data Management
+- Store site-wide data in `_data/` directory
+- Use cascade for template-specific data
+- Implement proper front matter structure
+- Use computed data for dynamic values
+
+### Performance
+- Optimize images using Eleventy Image plugin
+- Implement proper caching strategies
+- Use incremental builds during development
+- Minimize and bundle CSS/JS when appropriate
+
+### SEO and Metadata
+- Include proper meta tags in all layouts
+- Implement structured data where appropriate
+- Use semantic HTML and proper heading hierarchy
+- Generate sitemap.xml and robots.txt
+
+## Code Style and Formatting
+
+### HTML/Liquid
+- Use 2-space indentation
+- Keep line length under 100 characters when possible
+- Use double quotes for HTML attributes
+- Add comments for complex logic blocks
+
+### Front Matter
+```yaml
+---
+title: "Page Title"
+layout: layouts/base.liquid
+date: 2024-01-01
+tags:
+  - blog
+  - tech
+permalink: "/custom-url/"
+---
+```
+
+### Includes and Layouts
+- Keep layouts modular and reusable
+- Pass data to includes using parameters when needed
+- Use descriptive names for include files
+- Implement proper template inheritance
+
+## Security and Best Practices
+
+### Content Security
+- Escape user content: `{{ user_content | escape }}`
+- Validate and sanitize data inputs
+- Use proper HTML encoding for special characters
+
+### Accessibility
+- Include proper alt text for images
+- Use semantic HTML elements
+- Implement proper focus management
+- Add ARIA labels where necessary
+
+### Error Handling
+- Provide fallbacks for missing data
+- Use default filters: `{{ title | default: "Untitled" }}`
+- Handle empty collections gracefully
+- Implement 404 pages
+
+## Development Workflow
+
+### Local Development
+- Use `npx @11ty/eleventy --serve` for development server
+- Enable hot reloading for efficient development
+- Use `--incremental` flag for faster rebuilds
+
+### Build Process
+- Run `npx @11ty/eleventy` for production builds
+- Optimize assets during build process
+- Generate sitemap and other build-time assets
+- Test builds before deployment
+
+## Common Patterns
+
+### Blog Post Template
+```liquid
+---
+layout: layouts/post.liquid
+---
+{% assign post = collections.posts | where: "url", page.url | first %}
+
+<article>
+  <h1>{{ post.data.title }}</h1>
+  <time datetime="{{ post.date | date: '%Y-%m-%d' }}">
+    {{ post.date | date: "%B %d, %Y" }}
+  </time>
+  <div>
+    {{ content }}
+  </div>
+</article>
+```
+
+### Navigation Component
+```liquid
+<nav>
+  <ul>
+    {% for item in collections.nav %}
+      <li>
+        <a href="{{ item.url }}"{% if item.url == page.url %} aria-current="page"{% endif %}>
+          {{ item.data.title }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</nav>
+```
+
+### Pagination
+```liquid
+---
+pagination:
+  data: collections.posts
+  size: 10
+  alias: posts
+---
+
+{% for post in posts %}
+  <!-- post summary -->
+{% endfor %}
+
+{% if pagination.href.previous %}
+  <a href="{{ pagination.href.previous }}">← Previous</a>
+{% endif %}
+
+{% if pagination.href.next %}
+  <a href="{{ pagination.href.next }}">Next →</a>
+{% endif %}
+```
+
+## Plugin Recommendations
+
+### Essential Plugins
+- `@11ty/eleventy-plugin-rss` for RSS feeds
+- `@11ty/eleventy-img` for image optimization
+- `@11ty/eleventy-plugin-syntaxhighlight` for code highlighting
+- `@11ty/eleventy-plugin-navigation` for breadcrumbs and menus
+
+### Configuration Example
+```javascript
+// eleventy.config.js
+module.exports = function(eleventyConfig) {
+  // Add plugins
+  eleventyConfig.addPlugin(require("@11ty/eleventy-plugin-rss"));
+  eleventyConfig.addPlugin(require("@11ty/eleventy-img"));
+
+  // Custom filters
+  eleventyConfig.addFilter("dateToRfc3339", require("./src/_filters/date.js"));
+
+  // Pass through files
+  eleventyConfig.addPassthroughCopy("src/assets");
+
+  return {
+    dir: {
+      input: "src",
+      includes: "_includes",
+      data: "_data",
+      output: "_site"
+    }
+  };
+};
+```
+
+## Troubleshooting Common Issues
+
+### Template Errors
+- Check for missing closing tags in Liquid syntax
+- Verify variable names match data structure
+- Use proper filter syntax and chaining
+
+### Build Failures
+- Ensure all referenced files exist
+- Check for circular dependencies in includes
+- Validate front matter YAML syntax
+
+### Performance Issues
+- Use pagination for large collections
+- Optimize image sizes and formats
+- Minimize template complexity in loops
+
+Always prioritize clean, semantic HTML output and maintainable template structure. When in doubt, refer to the official Eleventy documentation and Liquid template language guides.
