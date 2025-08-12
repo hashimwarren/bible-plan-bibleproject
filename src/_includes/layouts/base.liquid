@@ -6,6 +6,11 @@
   <title>{% if title %}{{ title }} · {% endif %}{{ site.title | default: "BibleProject Reading Plans" }}</title>
   <meta name="description" content="{{ description | default: site.description }}">
   <meta name="theme-color" content="#0b6efd">
+  <meta property="og:title" content="{% if title %}{{ title }}{% else %}{{ site.title }}{% endif %}">
+  <meta property="og:description" content="{{ description | default: site.description }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+  <meta name="twitter:card" content="summary">
   <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.xml">
   <script>
     tailwind.config = {

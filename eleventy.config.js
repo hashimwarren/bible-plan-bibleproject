@@ -25,6 +25,21 @@ module.exports = function(eleventyConfig) {
     }
   });
 
+  // Shortcodes
+  try {
+    const Image = require("@11ty/eleventy-img");
+    eleventyConfig.addNunjucksAsyncShortcode("image", async (src, alt, sizes = "100vw") => {
+      const metadata = await Image(src, {
+        widths: [320, 640, 960, 1280],
+        formats: ["avif", "webp", "jpeg"],
+        urlPath: "/assets/img/",
+        outputDir: "_site/assets/img/",
+      });
+      const imageAttributes = { alt, sizes, loading: "lazy", decoding: "async" };
+      return Image.generateHTML(metadata, imageAttributes);
+    });
+  } catch {}
+
   return {
     dir: {
       input: "src",
