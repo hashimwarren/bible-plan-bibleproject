@@ -1,23 +1,8 @@
-<!doctype html>
-<html lang="en" class="h-full antialiased">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if title %}{{ title }} · {% endif %}BibleProject Reading Plans</title>
-  <meta name="theme-color" content="#0b6efd">
-  <script>
-    // Tailwind fine-tuning for typography scale and container rhythm
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ["ui-sans-serif","system-ui","-apple-system","Segoe UI","Roboto","Helvetica Neue","Arial","Noto Sans","Apple Color Emoji","Segoe UI Emoji"],
-          },
-          maxWidth: { 'content': '56rem' }, // ~896px, matches previous layout
-        }
-      }
-    }
-  </script>
+{%- comment -%}
+Deprecated: base layout moved to `_includes/layouts/base.liquid`.
+This file remains only as a heads-up for contributors.
+Update front matter to `layout: base` (alias) or `layout: layouts/base.liquid`.
+{%- endcomment -%}
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
 </head>
 <body class="min-h-full bg-slate-50 text-slate-800 leading-relaxed selection:bg-blue-100 selection:text-slate-900">
