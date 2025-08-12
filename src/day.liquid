@@ -1,0 +1,75 @@
+---
+layout: base.liquid
+pagination:
+  data: plan.days
+  size: 1
+  alias: dayData
+permalink: /day/{{ dayData.day }}/
+eleventyComputed:
+  title: "Day {{ dayData.day }}"
+---
+
+<div class="day-navigation">
+    <div>
+        {% assign prevDay = dayData.day | minus: 1 %}
+        {% if prevDay > 0 %}
+        <a href="/day/{{ prevDay }}/">&larr; Day {{ prevDay }}</a>
+        {% endif %}
+    </div>
+    
+    <div>
+        <strong>Day {{ dayData.day }} of 365</strong>
+    </div>
+    
+    <div>
+        {% assign nextDay = dayData.day | plus: 1 %}
+        {% if nextDay <= 365 %}
+        <a href="/day/{{ nextDay }}/">Day {{ nextDay }} &rarr;</a>
+        {% endif %}
+    </div>
+</div>
+
+<h1>Day {{ dayData.day }}</h1>
+
+{% if dayData.otReadings.size > 0 %}
+<div class="reading-section">
+    <h3>Old Testament</h3>
+    <ul class="reading-list">
+        {% for reading in dayData.otReadings %}
+        <li>{{ reading }}</li>
+        {% endfor %}
+    </ul>
+    {% if dayData.otUrl %}
+    <a href="{{ dayData.otUrl }}" class="bible-link" target="_blank" rel="noopener">Read Old Testament on Bible.com</a>
+    {% endif %}
+</div>
+{% endif %}
+
+{% if dayData.ntReadings.size > 0 %}
+<div class="reading-section">
+    <h3>New Testament</h3>
+    <ul class="reading-list">
+        {% for reading in dayData.ntReadings %}
+        <li>{{ reading }}</li>
+        {% endfor %}
+    </ul>
+    {% if dayData.ntUrl %}
+    <a href="{{ dayData.ntUrl }}" class="bible-link" target="_blank" rel="noopener">Read New Testament on Bible.com</a>
+    {% endif %}
+</div>
+{% endif %}
+
+{% if dayData.videos.size > 0 %}
+<div class="reading-section">
+    <h3>Videos</h3>
+    {% for video in dayData.videos %}
+    <div class="video-container">
+        <iframe 
+            src="{{ video }}" 
+            title="BibleProject Video for Day {{ dayData.day }}"
+            allowfullscreen>
+        </iframe>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}

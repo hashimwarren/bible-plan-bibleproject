@@ -42,6 +42,9 @@ out/
 
 # Dependencies
 node_modules/
+
+# Eleventy build output
+_site/
 jspm_packages/
 web_modules/
 

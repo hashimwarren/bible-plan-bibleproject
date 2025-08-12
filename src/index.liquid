@@ -1,0 +1,62 @@
+---
+layout: base.liquid
+title: Home
+---
+
+<div class="scripture-search">
+    <h2>Find Scripture Reading</h2>
+    <p>Search for a specific scripture reference to jump to its day:</p>
+    <form id="scripture-form">
+        <input 
+            type="text" 
+            id="scripture-input" 
+            list="scripture-refs" 
+            placeholder="Type a scripture reference (e.g., Genesis 1, Matthew 5)"
+            autocomplete="off"
+        >
+        <button type="submit">Go to Day</button>
+    </form>
+    
+    <datalist id="scripture-refs">
+        {% for item in plan.scriptureIndex %}
+        <option value="{{ item.ref }}">Day {{ item.day }}</option>
+        {% endfor %}
+    </datalist>
+</div>
+
+<h2>Browse All Days</h2>
+<p>Complete BibleProject Old Testament and New Testament reading plan with embedded videos.</p>
+
+<div class="day-grid">
+    {% for dayData in plan.days %}
+    <div class="day-card">
+        <h3><a href="/day/{{ dayData.day }}/">Day {{ dayData.day }}</a></h3>
+        
+        <div class="readings">
+            {% if dayData.otReadings.size > 0 %}
+            <strong>OT:</strong> {{ dayData.otReadings[0] }}{% if dayData.otReadings.size > 1 %} + {{ dayData.otReadings.size | minus: 1 }} more{% endif %}<br>
+            {% endif %}
+            
+            {% if dayData.ntReadings.size > 0 %}
+            <strong>NT:</strong> {{ dayData.ntReadings[0] }}{% if dayData.ntReadings.size > 1 %} + {{ dayData.ntReadings.size | minus: 1 }} more{% endif %}<br>
+            {% endif %}
+        </div>
+        
+        {% if dayData.videos.size > 0 %}
+        <div class="video-indicator">
+            🎥 {{ dayData.videos.size }} video{% if dayData.videos.size > 1 %}s{% endif %}
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+<script type="application/json" id="scriptureIndex">
+{
+  {% assign scriptureMap = '' %}
+  {% for item in plan.scriptureIndex %}
+    {% unless forloop.first %},{% endunless %}
+    "{{ item.ref }}": {{ item.day }}
+  {% endfor %}
+}
+</script>
