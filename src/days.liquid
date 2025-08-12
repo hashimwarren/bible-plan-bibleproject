@@ -8,7 +8,7 @@ permalink: "/day/{{ d.day }}/"
 ---
 {% assign day = d.day %}
 <header class="mb-5 md:mb-6">
-  <h1 class="text-2xl md:text-[28px] font-semibold tracking-tight text-slate-900">Day {{ day }}</h1>
+  <h1 class="text-2xl md:text-[28px] font-semibold tracking-tight text-slate-900">Day {{ day }}{% if d.hasJustice %} <span class="align-middle text-base" title="Justice scripture present">⭐</span>{% endif %}</h1>
   <p class="mt-1 text-slate-600">Old Testament and New Testament readings{% if d.videos and d.videos.size > 0 %} · Includes videos 🎬{% endif %}</p>
   <div class="mt-2.5 flex items-center gap-3 text-sm">
     {% if day > 1 %}<a class="text-slate-600 hover:text-slate-900 inline-flex items-center gap-1" href="/day/{{ day | minus: 1 }}/">← Previous</a>{% endif %}
@@ -30,6 +30,18 @@ permalink: "/day/{{ d.day }}/"
   {% endif %}
   {% if d.otUrl %}<p><a class="text-blue-600 hover:text-blue-700 underline underline-offset-2" href="{{ d.otUrl }}" target="_blank" rel="noopener">Read on Bible.com</a></p>{% endif %}
 </section>
+
+{% if d.justiceRefs and d.justiceRefs.size > 0 %}
+<section class="prose prose-slate max-w-none mt-5">
+  <h2>Justice Scriptures</h2>
+  <ul class="not-prose list-disc pl-5 space-y-1">
+    {% for ref in d.justiceRefs %}
+      <li class="text-slate-700">{{ ref }}</li>
+    {% endfor %}
+  </ul>
+  <p class="text-slate-500 text-sm">These are justice-related verses that fall within today's Old Testament chapters.</p>
+  </section>
+{% endif %}
 
 <section class="prose prose-slate max-w-none mt-5">
   <h2>New Testament</h2>

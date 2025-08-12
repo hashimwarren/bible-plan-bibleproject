@@ -54,6 +54,8 @@ module.exports = () => {
         otUrl: r.OT_URL || '',
         ntUrl: r.NT_URL || '',
         videos: splitVideos(r.Video_URLs),
+  // justiceRefs will be filled later if a justice verse maps to this day
+  justiceRefs: [],
       };
     })
     .sort((a, b) => a.day - b.day);
@@ -72,15 +74,78 @@ module.exports = () => {
   }
   scriptureIndex.sort((a, b) => a.ref.localeCompare(b.ref) || a.day - b.day);
 
+  // Build a quick lookup from OT reading (e.g., "Genesis 18") -> [dayNumbers]
+  const readingToDays = new Map();
+  for (const d of days) {
+    for (const ref of d.otReadings) {
+      if (!readingToDays.has(ref)) readingToDays.set(ref, []);
+      readingToDays.get(ref).push(d.day);
+    }
+  }
+
+  // Load justice scripture references (one per line) and attach to matching days
+  try {
+    const justiceCsvPath = path.resolve(__dirname, '../../Justice-scriptures-in-old-testament.csv');
+    if (fs.existsSync(justiceCsvPath)) {
+      const jContent = fs.readFileSync(justiceCsvPath, 'utf8').replace(/^\uFEFF/, '');
+      const lines = jContent
+        .split(/\r?\n/)
+        .map((l) => l.trim())
+        .filter((l) => l.length > 0 && !/^#/.test(l));
+
+      // Helper: normalize a full verse ref to an OT reading key (Book + Chapter)
+      const toReadingKey = (fullRef) => {
+        // Example: "Psalm 1:5" -> { book: "Psalms", chap: "1" } => "Psalms 1"
+        const m = fullRef.match(/^(.+?)\s+(\d+)(?::\d+.*)?$/);
+        if (!m) return null;
+        let book = m[1].trim();
+        const chap = m[2].trim();
+        // Normalize book name variants to match combined CSV
+        if (/^Psalm\b/i.test(book)) book = book.replace(/^Psalm\b/, 'Psalms');
+        // Standardize whitespace
+        book = book.replace(/\s+/g, ' ').trim();
+        return `${book} ${chap}`;
+      };
+
+      // Map for quick access to day object by day number
+      const dayMap = new Map(days.map((d) => [d.day, d]));
+
+      for (const fullRef of lines) {
+        const key = toReadingKey(fullRef);
+        if (!key) continue;
+        const matchDays = readingToDays.get(key);
+        if (!matchDays || matchDays.length === 0) continue;
+        for (const dayNum of matchDays) {
+          const d = dayMap.get(dayNum);
+          if (!d) continue;
+          // Avoid duplicates
+          if (!d.justiceRefs.includes(fullRef)) d.justiceRefs.push(fullRef);
+        }
+      }
+    } else {
+      // File optional: skip quietly
+    }
+  } catch (e) {
+    console.warn('Failed loading Justice-scriptures-in-old-testament.csv:', e && e.message ? e.message : e);
+  }
+
   const weeks = [];
   if (days && days.length) {
     for (let i = 0; i < days.length; i += 7) {
       const week = days.slice(i, i + 7);
+      // Compute week-level justice flag
+      const hasJustice = week.some((d) => d.justiceRefs && d.justiceRefs.length > 0);
       weeks.push({
         weekNumber: (i / 7) + 1,
         days: week,
+        hasJustice,
       });
     }
+  }
+
+  // Convenience: boolean per day
+  for (const d of days) {
+    d.hasJustice = Array.isArray(d.justiceRefs) && d.justiceRefs.length > 0;
   }
 
   return { days, scriptureIndex, weeks };
