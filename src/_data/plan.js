@@ -72,5 +72,16 @@ module.exports = () => {
   }
   scriptureIndex.sort((a, b) => a.ref.localeCompare(b.ref) || a.day - b.day);
 
-  return { days, scriptureIndex };
+  const weeks = [];
+  if (days && days.length) {
+    for (let i = 0; i < days.length; i += 7) {
+      const week = days.slice(i, i + 7);
+      weeks.push({
+        weekNumber: (i / 7) + 1,
+        days: week,
+      });
+    }
+  }
+
+  return { days, scriptureIndex, weeks };
 };

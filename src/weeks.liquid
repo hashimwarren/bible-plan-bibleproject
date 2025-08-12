@@ -1,0 +1,16 @@
+---
+layout: base
+permalink: "/weeks/"
+---
+<h1>Weekly Reading Plan</h1>
+<p>Browse the reading plan by week.</p>
+
+<div class="grid day-list">
+  {% for w in plan.weeks %}
+    <div class="card">
+      <div><strong>Week {{ w.weekNumber }}</strong></div>
+      <div class="muted">Day {{ w.days[0].day }} - Day {{ w.days | last | map: "day" }}</div>
+      <div style="margin-top:.5rem"><a class="btn" href="/week/{{ w.weekNumber }}/">Open Week</a></div>
+    </div>
+  {% endfor %}
+</div>
