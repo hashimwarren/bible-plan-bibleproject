@@ -2,15 +2,18 @@
 layout: base
 permalink: "/weeks/"
 ---
-<h1>Weekly Reading Plan</h1>
-<p>Browse the reading plan by week.</p>
+<header class="mb-5 md:mb-6">
+  <h1 class="text-2xl md:text-[28px] font-semibold tracking-tight text-slate-900">Weekly Reading Plan</h1>
+  <p class="mt-1 text-slate-600">Browse the reading plan by week.</p>
+  <p class="mt-2.5 text-sm text-slate-500">Tip: Use your browser's find to jump to a specific week number.</p>
+</header>
 
-<div class="grid day-list">
+<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
   {% for w in plan.weeks %}
-    <div class="card">
-      <div><strong>Week {{ w.weekNumber }}</strong></div>
-      <div class="muted">Day {{ w.days[0].day }} - Day {{ w.days | last | map: "day" }}</div>
-      <div style="margin-top:.5rem"><a class="btn" href="/week/{{ w.weekNumber }}/">Open Week</a></div>
+    <div class="rounded-lg border border-slate-200 bg-white p-3 shadow-sm hover:shadow transition-shadow">
+      <div class="font-medium text-slate-900">Week {{ w.weekNumber }}</div>
+      <div class="text-sm text-slate-600">Day {{ w.days[0].day }} - Day {{ w.days | last | map: "day" }}</div>
+      <div class="mt-2"><a class="inline-flex items-center rounded-md bg-blue-600 px-2.5 py-1.5 text-white text-xs font-medium hover:bg-blue-500" href="/week/{{ w.weekNumber }}/">Open Week</a></div>
     </div>
   {% endfor %}
 </div>

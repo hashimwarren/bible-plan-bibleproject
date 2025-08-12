@@ -106,5 +106,8 @@ playwright/.cache/
 
 test-results/
 
+# Ignore Eleventy build output
+_site/
+
 # Local Netlify folder
 .netlify/

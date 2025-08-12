@@ -7,54 +7,64 @@ pagination:
 permalink: "/day/{{ d.day }}/"
 ---
 {% assign day = d.day %}
-<h1>Day {{ day }}</h1>
+<header class="mb-5 md:mb-6">
+  <h1 class="text-2xl md:text-[28px] font-semibold tracking-tight text-slate-900">Day {{ day }}</h1>
+  <p class="mt-1 text-slate-600">Old Testament and New Testament readings{% if d.videos and d.videos.size > 0 %} · Includes videos 🎬{% endif %}</p>
+  <div class="mt-2.5 flex items-center gap-3 text-sm">
+    {% if day > 1 %}<a class="text-slate-600 hover:text-slate-900 inline-flex items-center gap-1" href="/day/{{ day | minus: 1 }}/">← Previous</a>{% endif %}
+    <span class="text-slate-300">|</span>
+    {% if day < 365 %}<a class="text-slate-600 hover:text-slate-900 inline-flex items-center gap-1" href="/day/{{ day | plus: 1 }}/">Next →</a>{% endif %}
+  </div>
+</header>
 
-<section>
+<section class="prose prose-slate max-w-none">
   <h2>Old Testament</h2>
   {% if d.otReadings.size > 0 %}
-    <ul>
+  <ul class="not-prose list-disc pl-5 space-y-1">
       {% for ref in d.otReadings %}
-        <li>{{ ref }}</li>
+        <li class="text-slate-700">{{ ref }}</li>
       {% endfor %}
     </ul>
   {% else %}
-    <p class="muted">No OT reading.</p>
+    <p class="text-slate-500">No OT reading.</p>
   {% endif %}
-  {% if d.otUrl %}<p><a href="{{ d.otUrl }}" target="_blank" rel="noopener">Read on Bible.com</a></p>{% endif %}
+  {% if d.otUrl %}<p><a class="text-blue-600 hover:text-blue-700 underline underline-offset-2" href="{{ d.otUrl }}" target="_blank" rel="noopener">Read on Bible.com</a></p>{% endif %}
 </section>
 
-<section>
+<section class="prose prose-slate max-w-none mt-5">
   <h2>New Testament</h2>
   {% if d.ntReadings.size > 0 %}
-    <ul>
+  <ul class="not-prose list-disc pl-5 space-y-1">
       {% for ref in d.ntReadings %}
-        <li>{{ ref }}</li>
+        <li class="text-slate-700">{{ ref }}</li>
       {% endfor %}
     </ul>
   {% else %}
-    <p class="muted">No NT reading.</p>
+    <p class="text-slate-500">No NT reading.</p>
   {% endif %}
-  {% if d.ntUrl %}<p><a href="{{ d.ntUrl }}" target="_blank" rel="noopener">Read on Bible.com</a></p>{% endif %}
+  {% if d.ntUrl %}<p><a class="text-blue-600 hover:text-blue-700 underline underline-offset-2" href="{{ d.ntUrl }}" target="_blank" rel="noopener">Read on Bible.com</a></p>{% endif %}
 </section>
 
-<section>
-  <h2>Videos</h2>
+<section class="mt-6">
+  <h2 class="text-base font-semibold text-slate-900 mb-2.5">Videos</h2>
   {% if d.videos and d.videos.size > 0 %}
-    <div class="grid videos">
+  <div class="grid gap-3 sm:grid-cols-2 videos">
       {% for v in d.videos %}
-        <iframe src="{{ v }}" title="BibleProject Video" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+        <div class="rounded-lg overflow-hidden shadow ring-1 ring-slate-200">
+          <iframe class="w-full aspect-video" src="{{ v }}" title="BibleProject Video" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+        </div>
       {% endfor %}
     </div>
   {% else %}
-    <p class="muted">No videos for this day.</p>
+    <p class="text-slate-500">No videos for this day.</p>
   {% endif %}
 </section>
 
-<div class="nav">
+<div class="mt-6 flex items-center justify-between">
   <div>
-    {% if day > 1 %}<a href="/day/{{ day | minus: 1 }}/">← Previous</a>{% endif %}
+    {% if day > 1 %}<a class="inline-flex items-center rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 hover:bg-slate-50" href="/day/{{ day | minus: 1 }}/">← Previous</a>{% endif %}
   </div>
   <div>
-    {% if day < 365 %}<a href="/day/{{ day | plus: 1 }}/">Next →</a>{% endif %}
+    {% if day < 365 %}<a class="inline-flex items-center rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 hover:bg-slate-50" href="/day/{{ day | plus: 1 }}/">Next →</a>{% endif %}
   </div>
 </div>
