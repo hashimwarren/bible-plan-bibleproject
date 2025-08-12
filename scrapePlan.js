@@ -193,6 +193,79 @@ function extractReadings(html) {
   return candidate || null;
 }
 
+/**
+ * Extract YouTube video URLs from the page HTML.
+ * Looks for iframe embeds and anchor links to youtube.com/youtu.be.
+ * Returns unique absolute URLs (prefer embed/watch forms as-is).
+ * @param {string} html
+ * @returns {string[]} Array of URLs
+ */
+function extractYouTubeEmbeds(html) {
+  if (!html) return [];
+  const $ = cheerio.load(html);
+  const urls = new Set();
+
+  const toAbs = (u) => {
+    if (!u) return null;
+    let url = String(u).trim();
+    if (!url) return null;
+    if (url.startsWith("//")) return "https:" + url;
+    if (url.startsWith("/")) {
+      // Likely from <a> within bible.com; treat non-youtube relative as skip
+      // Only allow relative youtube embed paths like /embed/...
+      if (/^\/embed\//i.test(url)) return "https://www.youtube.com" + url;
+      return null;
+    }
+    return url;
+  };
+
+  // iframes with youtube
+  $('iframe[src*="youtube.com"], iframe[src*="youtu.be"]').each((_, el) => {
+    const u = toAbs($(el).attr("src"));
+    if (u && /(youtube\.com|youtu\.be)/i.test(u)) urls.add(u);
+  });
+
+  // anchor links to youtube
+  $('a[href*="youtube.com"], a[href*="youtu.be"]').each((_, el) => {
+    const u = toAbs($(el).attr("href"));
+    if (u && /(youtube\.com|youtu\.be)/i.test(u)) urls.add(u);
+  });
+
+  // JSON blobs sometimes contain the URL
+  $('script[type="application/ld+json"], script[type="application/json"]').each((_, el) => {
+    const txt = $(el).contents().text();
+    if (!txt) return;
+    try {
+      const parsed = JSON.parse(txt);
+      const collect = (obj) => {
+        if (!obj || typeof obj !== 'object') return;
+        for (const v of Object.values(obj)) {
+          if (typeof v === 'string') {
+            const m = v.match(/https?:\/\/(?:www\.)?(?:youtube\.com|youtu\.be)\/[\w\-?=&%/#.]+/gi);
+            if (m) m.forEach((x) => urls.add(x));
+          } else if (Array.isArray(v)) {
+            v.forEach(collect);
+          } else if (typeof v === 'object') {
+            collect(v);
+          }
+        }
+      };
+      if (Array.isArray(parsed)) parsed.forEach(collect); else collect(parsed);
+    } catch {
+      // ignore JSON parse errors
+    }
+  });
+
+  // Final fallback: regex scan of raw HTML
+  const rx = /https?:\/\/(?:www\.)?(?:youtube\.com|youtu\.be)\/[\w\-?=&%/#.]+/gi;
+  const m = html.match(rx);
+  if (m) m.forEach((x) => urls.add(x));
+
+  // Filter: only keep actual video URLs, not generic channel/home links
+  const isVideo = (u) => /(youtube\.com\/embed\/|youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)/i.test(u);
+  return Array.from(urls).filter(isVideo);
+}
+
 function domExtractScriptureRefs($) {
   // Find headings containing 'Scripture'
   const headings = [];
@@ -409,11 +482,12 @@ async function scrapePlan(startDay = 1, endDay = 365, options = {}) {
           maxRetries: options.maxRetries,
           baseDelayMs: options.baseDelayMs,
         });
-        const readings = extractReadings(res.data);
+  const readings = extractReadings(res.data);
+  const videos = extractYouTubeEmbeds(res.data);
         if (!readings) {
           throw new Error(`Could not extract readings for day ${day} (${url})`);
         }
-        return { day, readings };
+  return { day, readings, videos };
       }).then(
         (v) => v,
         (err) => {
@@ -509,5 +583,5 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { scrapePlan, extractReadings, fetchWithRetry, urlForDay };
+module.exports = { scrapePlan, extractReadings, extractYouTubeEmbeds, fetchWithRetry, urlForDay };
 

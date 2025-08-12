@@ -8,7 +8,9 @@
   "plan:populate": "node populate_plan.js",
   "plan:populate:range": "cross-env START_DAY=1 END_DAY=365 node populate_plan.js",
   "nt:populate": "node populate_nt_plan.js",
-  "nt:populate:range": "cross-env START_DAY=1 END_DAY=365 PLAN_URL_TEMPLATE=https://www.bible.com/reading-plans/13233-bibleproject-new-testament-in-one-year/day/{day} node populate_nt_plan.js"
+  "nt:populate:range": "cross-env START_DAY=1 END_DAY=365 PLAN_URL_TEMPLATE=https://www.bible.com/reading-plans/13233-bibleproject-new-testament-in-one-year/day/{day} node populate_nt_plan.js",
+  "build:combined": "node build_combined_with_videos.js",
+  "build:combined:range": "cross-env START_DAY=1 END_DAY=365 node build_combined_with_videos.js"
   },
   "keywords": [],
   "author": "",
