@@ -6,7 +6,9 @@
   "test": "echo \"Error: no test specified\" && exit 1",
   "scrape:print": "cross-env PLAN_URL_TEMPLATE=https://www.bible.com/reading-plans/13630-bibleproject-old-testament-in-a-year/day/{day} node scrapePlan.js --startDay 1 --endDay 10",
   "plan:populate": "node populate_plan.js",
-  "plan:populate:range": "cross-env START_DAY=1 END_DAY=365 node populate_plan.js"
+  "plan:populate:range": "cross-env START_DAY=1 END_DAY=365 node populate_plan.js",
+  "nt:populate": "node populate_nt_plan.js",
+  "nt:populate:range": "cross-env START_DAY=1 END_DAY=365 PLAN_URL_TEMPLATE=https://www.bible.com/reading-plans/13233-bibleproject-new-testament-in-one-year/day/{day} node populate_nt_plan.js"
   },
   "keywords": [],
   "author": "",
