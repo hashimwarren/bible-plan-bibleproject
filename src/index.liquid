@@ -31,7 +31,10 @@ permalink: "/"
     <div class="rounded-lg border border-slate-200 bg-white p-3 shadow-sm hover:shadow transition-shadow">
       <div class="flex items-center justify-between">
         <div class="font-medium text-slate-900">Day {{ d.day }}</div>
-        {% if d.videos and d.videos.size > 0 %}<span class="text-sm" title="Has video">🎬</span>{% endif %}
+        <div class="flex items-center gap-1.5">
+          {% if d.hasJustice %}<span class="text-sm" title="Justice scripture present">⭐</span>{% endif %}
+          {% if d.videos and d.videos.size > 0 %}<span class="text-sm" title="Has video">🎬</span>{% endif %}
+        </div>
       </div>
       <div class="mt-1 text-sm text-slate-600">OT: {% if d.otReadings.size > 0 %}{{ d.otReadings[0] }}{% else %}-{% endif %}</div>
       <div class="text-sm text-slate-600">NT: {% if d.ntReadings.size > 0 %}{{ d.ntReadings[0] }}{% else %}-{% endif %}</div>
