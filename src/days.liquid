@@ -1,0 +1,60 @@
+---
+layout: base
+pagination:
+  data: plan.days
+  size: 1
+  alias: d
+permalink: "/day/{{ d.day }}/"
+---
+{% assign day = d.day %}
+<h1>Day {{ day }}</h1>
+
+<section>
+  <h2>Old Testament</h2>
+  {% if d.otReadings.size > 0 %}
+    <ul>
+      {% for ref in d.otReadings %}
+        <li>{{ ref }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">No OT reading.</p>
+  {% endif %}
+  {% if d.otUrl %}<p><a href="{{ d.otUrl }}" target="_blank" rel="noopener">Read on Bible.com</a></p>{% endif %}
+</section>
+
+<section>
+  <h2>New Testament</h2>
+  {% if d.ntReadings.size > 0 %}
+    <ul>
+      {% for ref in d.ntReadings %}
+        <li>{{ ref }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="muted">No NT reading.</p>
+  {% endif %}
+  {% if d.ntUrl %}<p><a href="{{ d.ntUrl }}" target="_blank" rel="noopener">Read on Bible.com</a></p>{% endif %}
+</section>
+
+<section>
+  <h2>Videos</h2>
+  {% if d.videos and d.videos.size > 0 %}
+    <div class="grid videos">
+      {% for v in d.videos %}
+        <iframe src="{{ v }}" title="BibleProject Video" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="muted">No videos for this day.</p>
+  {% endif %}
+</section>
+
+<div class="nav">
+  <div>
+    {% if day > 1 %}<a href="/day/{{ day | minus: 1 }}/">← Previous</a>{% endif %}
+  </div>
+  <div>
+    {% if day < 365 %}<a href="/day/{{ day | plus: 1 }}/">Next →</a>{% endif %}
+  </div>
+</div>

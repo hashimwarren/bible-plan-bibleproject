@@ -10,7 +10,9 @@
   "nt:populate": "node populate_nt_plan.js",
   "nt:populate:range": "cross-env START_DAY=1 END_DAY=365 PLAN_URL_TEMPLATE=https://www.bible.com/reading-plans/13233-bibleproject-new-testament-in-one-year/day/{day} node populate_nt_plan.js",
   "build:combined": "node build_combined_with_videos.js",
-  "build:combined:range": "cross-env START_DAY=1 END_DAY=365 node build_combined_with_videos.js"
+  "build:combined:range": "cross-env START_DAY=1 END_DAY=365 node build_combined_with_videos.js",
+  "site:dev": "eleventy --serve",
+  "site:build": "eleventy"
   },
   "keywords": [],
   "author": "",
@@ -24,5 +26,8 @@
   "fs-extra": "^11.3.1",
   "p-limit": "^6.2.0",
   "cross-env": "^7.0.3"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1"
   }
 }
