@@ -1,0 +1,107 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Diagnostic reports
+report.*.json
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directories
+coverage
+*.lcov
+.nyc_output
+
+# Build artifacts
+build/
+build/Release/
+dist/
+out/
+
+# Caches
+.cache/
+.parcel-cache/
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+.eslintcache
+.stylelintcache
+.turbo/
+.vitest/
+.jest/
+
+# Dependencies
+node_modules/
+jspm_packages/
+web_modules/
+
+# TypeScript
+*.tsbuildinfo
+
+# Package manager caches
+.npm/
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# Framework outputs
+.next/
+.nuxt/
+.svelte-kit/
+.serverless/
+
+# Tooling
+.grunt/
+.fusebox/
+.dynamodb/
+.tern-port
+
+# Env files
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Editors/IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test artifacts
+junit.xml
+coverage-final.json
+
+# E2E tools
+cypress/screenshots/
+cypress/videos/
+.cypress-cache/
+playwright-report/
+playwright/.cache/
+
+test-results/
