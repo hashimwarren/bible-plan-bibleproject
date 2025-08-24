@@ -16,7 +16,7 @@ permalink: "/weeks/"
       class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm hover:border-blue-500 hover:bg-blue-50"
     >
       <div class="font-semibold text-slate-900">Week {{ week.weekNumber }}</div>
-      <div class="text-sm text-slate-500">Days {{ week.days[0].day }}-{{ week.days[6].day }}</div>
+      <div class="text-sm text-slate-500">Days {{ week.days[0].day }}-{{ week.days.last.day }}</div>
       {% if week.hasJustice %}<div class="mt-1 text-xs text-slate-500" title="This week contains a justice-themed scripture">⭐ Justice</div>{% endif %}
     </a>
   {% endfor %}
