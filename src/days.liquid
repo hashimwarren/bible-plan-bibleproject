@@ -65,7 +65,7 @@ permalink: "/day/{{ d.day }}/"
 <section class="mt-6">
   <h2 class="text-base font-semibold text-slate-900 mb-2.5">Videos</h2>
   {% if d.videos and d.videos.size > 0 %}
-  <div class="grid gap-3 sm:grid-cols-2 videos">
+  <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 videos">
       {% for v in d.videos %}
         <div class="rounded-lg overflow-hidden shadow ring-1 ring-slate-200">
           <iframe class="w-full aspect-video" src="{{ v }}" title="BibleProject Video" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
