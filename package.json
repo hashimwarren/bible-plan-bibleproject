@@ -13,8 +13,8 @@
     "build:combined:range": "cross-env START_DAY=1 END_DAY=365 node build_combined_with_videos.js",
     "build:css": "npx tailwindcss -i ./src/assets/styles.css -o ./_site/assets/styles.css --minify",
     "watch:css": "npx tailwindcss -i ./src/assets/styles.css -o ./_site/assets/styles.css --watch",
-    "site:dev": "npm run build:css && eleventy --serve",
-    "site:build": "npm run build:css && eleventy",
+    "site:dev": "eleventy && npm run build:css && eleventy --serve",
+    "site:build": "eleventy && npm run build:css",
     "deploy:preview": "netlify deploy --dir=_site --build --open",
     "deploy:prod": "netlify deploy --dir=_site --prod --build"
   },
