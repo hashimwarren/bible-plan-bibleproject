@@ -13,6 +13,9 @@ module.exports = function(eleventyConfig) {
 
   // Passthrough static assets
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
+  eleventyConfig.addPassthroughCopy({ "src/assets/app.js": "assets/app.js" });
+  eleventyConfig.addPassthroughCopy({ "src/assets/mobile-fallback.css": "assets/mobile-fallback.css" });
+  eleventyConfig.addPassthroughCopy({ "src/sw.js": "sw.js" });
 
   // Simple filters
   eleventyConfig.addFilter("dateISO", (value) => {

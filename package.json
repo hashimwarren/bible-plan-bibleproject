@@ -11,8 +11,10 @@
     "nt:populate:range": "cross-env START_DAY=1 END_DAY=365 PLAN_URL_TEMPLATE=https://www.bible.com/reading-plans/13233-bibleproject-new-testament-in-one-year/day/{day} node populate_nt_plan.js",
     "build:combined": "node build_combined_with_videos.js",
     "build:combined:range": "cross-env START_DAY=1 END_DAY=365 node build_combined_with_videos.js",
-    "site:dev": "eleventy --serve",
-    "site:build": "eleventy",
+    "build:css": "npx tailwindcss -i ./src/assets/styles.css -o ./_site/assets/styles.css --minify",
+    "watch:css": "npx tailwindcss -i ./src/assets/styles.css -o ./_site/assets/styles.css --watch",
+    "site:dev": "npm run build:css && eleventy --serve",
+    "site:build": "npm run build:css && eleventy",
     "deploy:preview": "netlify deploy --dir=_site --build --open",
     "deploy:prod": "netlify deploy --dir=_site --prod --build"
   },
@@ -30,10 +32,16 @@
     "p-limit": "^6.2.0"
   },
   "devDependencies": {
-  "@11ty/eleventy": "^2.0.1",
-  "@11ty/eleventy-img": "^5.0.0",
-  "@11ty/eleventy-navigation": "^0.3.5",
-  "@11ty/eleventy-plugin-rss": "^2.0.1",
-  "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0"
+    "@11ty/eleventy": "^2.0.1",
+    "@11ty/eleventy-img": "^5.0.0",
+    "@11ty/eleventy-navigation": "^0.3.5",
+    "@11ty/eleventy-plugin-rss": "^2.0.1",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17"
   }
 }

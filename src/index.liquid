@@ -13,23 +13,17 @@ permalink: "/"
   <form id="scripture-form" action="/day/" method="get" class="flex flex-wrap items-center gap-3">
     <label for="scripture" class="text-sm font-medium text-slate-700">Find a scripture:</label>
     <div class="flex-1 min-w-[260px] max-w-xl">
-      <input id="scripture" name="q" type="text" list="scriptures" placeholder="e.g., James 1 or Genesis 1" autocomplete="off" class="block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+      <input id="scripture" name="q" type="text" placeholder="e.g., James 1 or Genesis 1" autocomplete="off" class="block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
     </div>
-    <datalist id="scriptures">
-      {% for item in plan.scriptureIndex %}
-        <option value="{{ item.ref }}"></option>
-      {% endfor %}
-    </datalist>
-    <button class="inline-flex items-center rounded-md bg-blue-600 px-3 py-2 text-white text-sm font-medium shadow-sm hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" type="submit">Go</button>
+    <button class="btn-primary" type="submit">Go</button>
   </form>
-  <script id="scriptureIndex" type="application/json">[
-    {% for item in plan.scriptureIndex %}{"ref":"{{ item.ref | escape }}","day":{{ item.day }}}{% if forloop.last != true %},{% endif %}{% endfor %}
-  ]</script>
+  <!-- Scripture index will be loaded asynchronously for better performance -->
 </section>
 
-<h2 class="text-base font-semibold text-slate-900 mb-2.5">All Days</h2>
-<div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-  {% for d in plan.days %}
+<h2 class="text-base font-semibold text-slate-900 mb-2.5">Recent Days</h2>
+<div id="days-grid" class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+  {% assign days_to_show = plan.days | slice: 0, 30 %}
+  {% for d in days_to_show %}
     <div class="rounded-lg border border-slate-200 bg-white p-3 shadow-sm hover:shadow transition-shadow">
       <div class="flex items-center justify-between">
         <div class="font-medium text-slate-900">Day {{ d.day }}</div>
@@ -40,7 +34,29 @@ permalink: "/"
       </div>
       <div class="mt-1 text-sm text-slate-600">OT: {% if d.otReadings.size > 0 %}{{ d.otReadings[0] }}{% else %}-{% endif %}</div>
       <div class="text-sm text-slate-600">NT: {% if d.ntReadings.size > 0 %}{{ d.ntReadings[0] }}{% else %}-{% endif %}</div>
-      <div class="mt-2"><a class="inline-flex items-center rounded-md bg-blue-600 px-2.5 py-1.5 text-white text-xs font-medium hover:bg-blue-500" href="/day/{{ d.day }}/">Open Day</a></div>
+      <div class="mt-2"><a class="btn-primary" href="/day/{{ d.day }}/">Open Day</a></div>
     </div>
   {% endfor %}
 </div>
+
+<div class="mt-6 text-center">
+  <button id="load-more-days" class="btn-secondary" data-loaded="30" data-total="{{ plan.days.size }}">
+    Load More Days ({{ plan.days.size | minus: 30 }} remaining)
+  </button>
+  <div class="mt-2 text-sm text-slate-600">
+    Or <a class="text-blue-600 hover:text-blue-700 underline underline-offset-2" href="/weeks/">view by week</a> for faster browsing
+  </div>
+</div>
+
+<script id="remaining-days-data" type="application/json">[
+  {% assign remaining_days = plan.days | slice: 30, 335 %}
+  {% for d in remaining_days %}
+    {
+      "day": {{ d.day }},
+      "hasJustice": {{ d.hasJustice }},
+      "hasVideos": {% if d.videos and d.videos.size > 0 %}true{% else %}false{% endif %},
+      "otReading": "{% if d.otReadings.size > 0 %}{{ d.otReadings[0] | escape }}{% else %}-{% endif %}",
+      "ntReading": "{% if d.ntReadings.size > 0 %}{{ d.ntReadings[0] | escape }}{% else %}-{% endif %}"
+    }{% if forloop.last != true %},{% endif %}
+  {% endfor %}
+]</script>
