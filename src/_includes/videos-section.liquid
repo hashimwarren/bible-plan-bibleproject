@@ -1,0 +1,30 @@
+{% comment %}
+  Videos Section Partial
+  Parameters:
+  - videos: Array of video URLs
+  - heading: Optional heading (default: "Videos")
+  - heading_level: HTML heading level (default: "h2")
+  - grid_classes: Optional grid classes (default: "grid grid-cols-1 gap-3 sm:grid-cols-2")
+  - margin_top: Optional margin top class (default: "mt-6")
+{% endcomment %}
+
+<section class="{{ margin_top | default: 'mt-6' }}">
+  {% assign heading_level = heading_level | default: "h2" %}
+  {% if heading_level == "h2" %}
+    <h2 class="text-base font-semibold text-slate-900 mb-2.5">{{ heading | default: "Videos" }}</h2>
+  {% elsif heading_level == "h3" %}
+    <h3 class="text-base font-semibold text-slate-900 mb-2.5">{{ heading | default: "Videos" }}</h3>
+  {% endif %}
+  
+  {% if videos and videos.size > 0 %}
+    <div class="{{ grid_classes | default: 'grid grid-cols-1 gap-3 sm:grid-cols-2' }} videos">
+      {% for v in videos %}
+        <div class="rounded-lg overflow-hidden shadow ring-1 ring-slate-200">
+          <iframe class="w-full aspect-video" src="{{ v }}" title="BibleProject Video" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-slate-500">No videos for this day.</p>
+  {% endif %}
+</section>

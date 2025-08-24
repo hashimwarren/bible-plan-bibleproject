@@ -1,8 +1,9 @@
 module.exports = function(eleventyConfig) {
   // Plugins (safe defaults; they don't change output unless used)
-  try {
-    eleventyConfig.addPlugin(require("@11ty/eleventy-plugin-rss"));
-  } catch {}
+  // RSS plugin temporarily disabled due to version compatibility
+  // try {
+  //   eleventyConfig.addPlugin(require("@11ty/eleventy-plugin-rss"));
+  // } catch {}
   try {
     eleventyConfig.addPlugin(require("@11ty/eleventy-plugin-syntaxhighlight"));
   } catch {}
@@ -12,9 +13,6 @@ module.exports = function(eleventyConfig) {
 
   // Passthrough static assets
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
-
-  // Layout aliases
-  eleventyConfig.addLayoutAlias("base", "layouts/base.liquid");
 
   // Simple filters
   eleventyConfig.addFilter("dateISO", (value) => {
@@ -44,6 +42,7 @@ module.exports = function(eleventyConfig) {
     dir: {
       input: "src",
       includes: "_includes",
+      layouts: "_layouts",
       data: "_data",
       output: "_site",
     },

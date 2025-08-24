@@ -1,5 +1,5 @@
 ---
-layout: base
+layout: base.liquid
 eleventyComputed:
   title: "Day {{ d.day }} · BibleProject Plan"
   description: "Old and New Testament readings and videos for day {{ d.day }}."
@@ -22,67 +22,13 @@ permalink: "/day/{{ d.day }}/"
   </div>
 </header>
 
-<section class="prose prose-slate max-w-none">
-  <h2>Old Testament</h2>
-  {% if d.otReadings.size > 0 %}
-  <ul class="not-prose list-disc pl-5 space-y-1">
-      {% for ref in d.otReadings %}
-        <li class="text-slate-700">{{ ref }}</li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p class="text-slate-500">No OT reading.</p>
-  {% endif %}
-  {% if d.otUrl %}<p><a class="text-blue-600 hover:text-blue-700 underline underline-offset-2" href="{{ d.otUrl }}" target="_blank" rel="noopener">Read on Bible.com</a></p>{% endif %}
-</section>
+{% include "scripture-readings.liquid" heading: "Old Testament", readings: d.otReadings, url: d.otUrl %}
 
-{% if d.justiceRefs and d.justiceRefs.size > 0 %}
-<section class="prose prose-slate max-w-none mt-5">
-  <h2>Justice Scriptures</h2>
-  <ul class="not-prose list-disc pl-5 space-y-1">
-    {% for ref in d.justiceRefs %}
-      <li class="text-slate-700">{{ ref }}</li>
-    {% endfor %}
-  </ul>
-  <p class="text-slate-500 text-sm">These are justice-related verses that fall within today's Old Testament chapters.</p>
-  </section>
-{% endif %}
+{% include "justice-scriptures.liquid" justice_refs: d.justiceRefs %}
 
-<section class="prose prose-slate max-w-none mt-5">
-  <h2>New Testament</h2>
-  {% if d.ntReadings.size > 0 %}
-  <ul class="not-prose list-disc pl-5 space-y-1">
-      {% for ref in d.ntReadings %}
-        <li class="text-slate-700">{{ ref }}</li>
-      {% endfor %}
-    </ul>
-  {% else %}
-    <p class="text-slate-500">No NT reading.</p>
-  {% endif %}
-  {% if d.ntUrl %}<p><a class="text-blue-600 hover:text-blue-700 underline underline-offset-2" href="{{ d.ntUrl }}" target="_blank" rel="noopener">Read on Bible.com</a></p>{% endif %}
-</section>
+{% include "scripture-readings.liquid" heading: "New Testament", readings: d.ntReadings, url: d.ntUrl, margin_top: "mt-5" %}
 
-<section class="mt-6">
-  <h2 class="text-base font-semibold text-slate-900 mb-2.5">Videos</h2>
-  {% if d.videos and d.videos.size > 0 %}
-  <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 videos">
-      {% for v in d.videos %}
-        <div class="rounded-lg overflow-hidden shadow ring-1 ring-slate-200">
-          <iframe class="w-full aspect-video" src="{{ v }}" title="BibleProject Video" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
-        </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <p class="text-slate-500">No videos for this day.</p>
-  {% endif %}
-</section>
+{% include "videos-section.liquid" videos: d.videos %}
 
-<div class="mt-6 flex items-center justify-between">
-  <div>
-    {% if day > 1 %}<a class="inline-flex items-center rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 hover:bg-slate-50" href="/day/{{ day | minus: 1 }}/">← Previous</a>{% endif %}
-  </div>
-  <a class="inline-flex items-center rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 hover:bg-slate-50" href="/week/{{ day | minus: 1 | divided_by: 7 | floor | plus: 1 }}/">Back to Week</a>
-  <div>
-    {% if day < 365 %}<a class="inline-flex items-center rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 hover:bg-slate-50" href="/day/{{ day | plus: 1 }}/">Next →</a>{% endif %}
-  </div>
-</div>
+{% assign week_number = day | minus: 1 | divided_by: 7 | floor | plus: 1 %}
+{% include "navigation-buttons.liquid" current_number: day, type: "day", back_to_text: "Back to Week", back_to_url: "/week/" | append: week_number | append: "/" %}
