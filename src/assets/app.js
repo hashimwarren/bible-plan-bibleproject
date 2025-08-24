@@ -19,6 +19,12 @@
     window.addEventListener('scroll', onScroll, { passive: true });
   } catch {}
 
+  // Mobile navigation toggle
+  try {
+      nav?.classList.toggle('hidden', !expanded);
+    });
+  } catch {}
+
   const form = document.getElementById('scripture-form');
   const input = document.getElementById('scripture');
   const indexEl = document.getElementById('scriptureIndex');
