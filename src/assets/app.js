@@ -19,6 +19,17 @@
     window.addEventListener('scroll', onScroll, { passive: true });
   } catch {}
 
+  // Mobile navigation toggle
+  try {
+    const menu = document.getElementById('menu-button');
+    const nav = document.getElementById('main-nav');
+    menu?.addEventListener('click', function(){
+      const expanded = menu.getAttribute('aria-expanded') === 'true';
+      menu.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+      nav?.classList.toggle('hidden', expanded);
+    });
+  } catch {}
+
   const form = document.getElementById('scripture-form');
   const input = document.getElementById('scripture');
   const indexEl = document.getElementById('scriptureIndex');
