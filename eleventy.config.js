@@ -26,6 +26,27 @@ module.exports = function(eleventyConfig) {
     }
   });
 
+  // Get current day of year (1-365/366)
+  eleventyConfig.addFilter("currentDayOfYear", () => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const diff = now - start;
+    const oneDay = 1000 * 60 * 60 * 24;
+    return Math.floor(diff / oneDay);
+  });
+
+  // Get current week of year (1-53)
+  eleventyConfig.addFilter("currentWeekOfYear", () => {
+    const dayOfYear = (() => {
+      const now = new Date();
+      const start = new Date(now.getFullYear(), 0, 0);
+      const diff = now - start;
+      const oneDay = 1000 * 60 * 60 * 24;
+      return Math.floor(diff / oneDay);
+    })();
+    return Math.ceil(dayOfYear / 7);
+  });
+
   // Shortcodes
   try {
     const Image = require("@11ty/eleventy-img");
