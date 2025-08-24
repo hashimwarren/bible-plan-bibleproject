@@ -91,23 +91,47 @@
     });
   });
 
-  // Scripture search functionality
+  // Scripture search functionality with async loading
   utils.safeExecute(() => {
     const form = document.getElementById('scripture-form');
     const input = document.getElementById('scripture');
-    const indexEl = document.getElementById('scriptureIndex');
     
     if (!form || !input) return;
 
     let scriptureIndex = [];
-    try {
-      scriptureIndex = JSON.parse(indexEl?.textContent || '[]');
-    } catch (error) {
-      console.warn('Failed to parse scripture index:', error);
+    let isIndexLoaded = false;
+
+    // Load scripture index asynchronously
+    async function loadScriptureIndex() {
+      if (isIndexLoaded) return;
+      
+      try {
+        const response = await fetch('/api/scripture-index.json');
+        if (response.ok) {
+          scriptureIndex = await response.json();
+          isIndexLoaded = true;
+          
+          // Create datalist for autocomplete
+          const datalist = document.createElement('datalist');
+          datalist.id = 'scriptures';
+          scriptureIndex.forEach(item => {
+            const option = document.createElement('option');
+            option.value = item.ref;
+            datalist.appendChild(option);
+          });
+          document.body.appendChild(datalist);
+          input.setAttribute('list', 'scriptures');
+        }
+      } catch (error) {
+        console.warn('Failed to load scripture index:', error);
+      }
     }
 
+    // Load index on first focus for better performance
+    input.addEventListener('focus', loadScriptureIndex, { once: true });
+
     function findDaysForRef(ref) {
-      if (!ref) return [];
+      if (!ref || !isIndexLoaded) return [];
       
       const query = String(ref).trim().toLowerCase();
       
@@ -191,6 +215,121 @@
       if (e.key === 'Enter' && !input.value) {
         input.focus();
       }
+    });
+  });
+
+  // Load more days functionality
+  utils.safeExecute(() => {
+    const loadMoreBtn = document.getElementById('load-more-days');
+    const daysGrid = document.getElementById('days-grid');
+    const remainingDataEl = document.getElementById('remaining-days-data');
+    
+    if (!loadMoreBtn || !daysGrid || !remainingDataEl) return;
+
+    let remainingDays = [];
+    try {
+      remainingDays = JSON.parse(remainingDataEl.textContent || '[]');
+    } catch (error) {
+      console.warn('Failed to parse remaining days data:', error);
+      return;
+    }
+
+    let currentLoaded = parseInt(loadMoreBtn.dataset.loaded, 10) || 30;
+    const batchSize = 30;
+
+    function createDayCard(day) {
+      return `
+        <div class="rounded-lg border border-slate-200 bg-white p-3 shadow-sm hover:shadow transition-shadow">
+          <div class="flex items-center justify-between">
+            <div class="font-medium text-slate-900">Day ${day.day}</div>
+            <div class="flex items-center gap-1.5">
+              ${day.hasJustice ? '<span class="text-sm" title="Justice scripture present">⭐</span>' : ''}
+              ${day.hasVideos ? '<span class="text-sm" title="Has video">🎬</span>' : ''}
+            </div>
+          </div>
+          <div class="mt-1 text-sm text-slate-600">OT: ${day.otReading}</div>
+          <div class="text-sm text-slate-600">NT: ${day.ntReading}</div>
+          <div class="mt-2"><a class="btn-primary" href="/day/${day.day}/">Open Day</a></div>
+        </div>
+      `;
+    }
+
+    loadMoreBtn.addEventListener('click', function() {
+      const nextBatch = remainingDays.slice(currentLoaded - 30, currentLoaded - 30 + batchSize);
+      
+      if (nextBatch.length === 0) {
+        loadMoreBtn.style.display = 'none';
+        return;
+      }
+
+      // Add new cards with fade-in animation
+      const fragment = document.createDocumentFragment();
+      nextBatch.forEach(day => {
+        const div = document.createElement('div');
+        div.innerHTML = createDayCard(day);
+        div.firstElementChild.style.opacity = '0';
+        div.firstElementChild.style.transform = 'translateY(20px)';
+        fragment.appendChild(div.firstElementChild);
+      });
+
+      daysGrid.appendChild(fragment);
+
+      // Trigger animation
+      requestAnimationFrame(() => {
+        const newCards = daysGrid.querySelectorAll('[style*="opacity: 0"]');
+        newCards.forEach((card, index) => {
+          setTimeout(() => {
+            card.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+          }, index * 50);
+        });
+      });
+
+      currentLoaded += batchSize;
+      const remaining = remainingDays.length - (currentLoaded - 30);
+      
+      if (remaining <= 0) {
+        loadMoreBtn.style.display = 'none';
+      } else {
+        loadMoreBtn.innerHTML = `Load More Days (${remaining} remaining)`;
+      }
+    });
+  });
+
+  // Lazy video loading
+  utils.safeExecute(() => {
+    const lazyVideos = document.querySelectorAll('.lazy-video[data-src]');
+    
+    lazyVideos.forEach(placeholder => {
+      const loadVideo = () => {
+        const src = placeholder.dataset.src;
+        if (!src) return;
+        
+        const iframe = document.createElement('iframe');
+        iframe.className = 'w-full aspect-video';
+        iframe.src = src;
+        iframe.title = 'BibleProject Video';
+        iframe.allowFullscreen = true;
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        iframe.loading = 'lazy';
+        
+        // Fade transition
+        placeholder.style.opacity = '0';
+        placeholder.style.transition = 'opacity 0.3s ease';
+        
+        setTimeout(() => {
+          placeholder.parentNode.replaceChild(iframe, placeholder);
+        }, 300);
+      };
+      
+      placeholder.addEventListener('click', loadVideo);
+      placeholder.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          loadVideo();
+        }
+      });
     });
   });
 })();

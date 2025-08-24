@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Performance-optimized utilities */
+@layer utilities {
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+  
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  .gpu-accelerated {
+    transform: translateZ(0);
+  }
+}
+
+/* Button component styles */
+@layer components {
+  .btn {
+    @apply inline-flex items-center rounded-md px-3 py-2 text-sm font-medium shadow-sm transition-colors;
+  }
+
+  .btn:focus {
+    @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply btn bg-blue-600 text-white hover:bg-blue-500;
+  }
+
+  .btn-secondary {
+    @apply btn bg-amber-500/90 text-white hover:bg-amber-400;
+  }
+}

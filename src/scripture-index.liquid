@@ -1,0 +1,9 @@
+---
+permalink: "/api/scripture-index.json"
+eleventyExcludeFromCollections: true
+---
+[
+{% for item in plan.scriptureIndex -%}
+  {"ref":"{{ item.ref | escape }}","day":{{ item.day }}}{% if forloop.last != true %},{% endif %}
+{%- endfor %}
+]
