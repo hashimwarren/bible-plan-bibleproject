@@ -1,21 +1,23 @@
 ---
 layout: base
-title: "Weeks · BibleProject Plan"
-description: "Weekly overview of BibleProject reading plan with links to each day."
+title: "Weekly Reading Plan · BibleProject"
+description: "A weekly overview of the BibleProject reading plan."
 permalink: "/weeks/"
 ---
 <header class="mb-5 md:mb-6">
   <h1 class="text-2xl md:text-[28px] font-semibold tracking-tight text-slate-900">Weekly Reading Plan</h1>
-  <p class="mt-1 text-slate-600">Browse the reading plan by week.</p>
-  <p class="mt-2.5 text-sm text-slate-500">Tip: Use your browser's find to jump to a specific week number.</p>
+  <p class="mt-1 text-slate-600">A weekly overview of the BibleProject reading plan.</p>
 </header>
 
-<div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-  {% for w in plan.weeks %}
-    <div class="rounded-lg border border-slate-200 bg-white p-3 shadow-sm hover:shadow transition-shadow">
-  <div class="font-medium text-slate-900">Week {{ w.weekNumber }}{% if w.hasJustice %} <span class="text-sm" title="Justice scripture present this week">⭐</span>{% endif %}</div>
-      <div class="text-sm text-slate-600">Day {{ w.days[0].day }} - Day {{ w.days | last | map: "day" }}</div>
-      <div class="mt-2"><a class="inline-flex items-center rounded-md bg-blue-600 px-2.5 py-1.5 text-white text-xs font-medium hover:bg-blue-500" href="/week/{{ w.weekNumber }}/">Open Week</a></div>
-    </div>
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+  {% for week in plan.weeks %}
+    <a
+      href="/week/{{ week.weekNumber }}/"
+      class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm hover:border-blue-500 hover:bg-blue-50"
+    >
+      <div class="font-semibold text-slate-900">Week {{ week.weekNumber }}</div>
+      <div class="text-sm text-slate-500">Days {{ week.days[0].day }}-{{ week.days.last.day }}</div>
+      {% if week.hasJustice %}<div class="mt-1 text-xs text-slate-500" title="This week contains a justice-themed scripture">⭐ Justice</div>{% endif %}
+    </a>
   {% endfor %}
 </div>
