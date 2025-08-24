@@ -21,12 +21,7 @@
 
   // Mobile navigation toggle
   try {
-    const menu = document.getElementById('menu-button');
-    const nav = document.getElementById('main-nav');
-    menu?.addEventListener('click', function(){
-      const expanded = menu.getAttribute('aria-expanded') === 'true';
-      menu.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-      nav?.classList.toggle('hidden', expanded);
+      nav?.classList.toggle('hidden', !expanded);
     });
   } catch {}
 
