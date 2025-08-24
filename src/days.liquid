@@ -16,6 +16,8 @@ permalink: "/day/{{ d.day }}/"
   <div class="mt-2.5 flex items-center gap-3 text-sm">
     {% if day > 1 %}<a class="text-slate-600 hover:text-slate-900 inline-flex items-center gap-1" href="/day/{{ day | minus: 1 }}/">← Previous</a>{% endif %}
     <span class="text-slate-300">|</span>
+    <a class="text-slate-600 hover:text-slate-900" href="/week/{{ day | minus: 1 | divided_by: 7 | floor | plus: 1 }}/">Back to Week</a>
+    <span class="text-slate-300">|</span>
     {% if day < 365 %}<a class="text-slate-600 hover:text-slate-900 inline-flex items-center gap-1" href="/day/{{ day | plus: 1 }}/">Next →</a>{% endif %}
   </div>
 </header>
@@ -79,6 +81,7 @@ permalink: "/day/{{ d.day }}/"
   <div>
     {% if day > 1 %}<a class="inline-flex items-center rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 hover:bg-slate-50" href="/day/{{ day | minus: 1 }}/">← Previous</a>{% endif %}
   </div>
+  <a class="inline-flex items-center rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 hover:bg-slate-50" href="/week/{{ day | minus: 1 | divided_by: 7 | floor | plus: 1 }}/">Back to Week</a>
   <div>
     {% if day < 365 %}<a class="inline-flex items-center rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 hover:bg-slate-50" href="/day/{{ day | plus: 1 }}/">Next →</a>{% endif %}
   </div>
