@@ -15,6 +15,10 @@
   <!-- Preload critical assets -->
   <link rel="preload" href="/assets/styles.css" as="style">
   <link rel="preload" href="/assets/app.js" as="script">
+  <!-- Modern fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- DNS prefetch for external resources -->
   <link rel="dns-prefetch" href="//www.youtube.com">
   <!-- Critical CSS -->
@@ -22,31 +26,31 @@
   <!-- Mobile fallback CSS for enhanced accessibility -->
   <link rel="stylesheet" href="/assets/mobile-fallback.css">
 </head>
-<body class="min-h-full bg-amber-50 text-slate-800 leading-relaxed selection:bg-amber-200 selection:text-slate-900">
-  <header class="sticky top-0 z-50 bg-amber-700/90 supports-[backdrop-filter]:bg-amber-700/80 backdrop-blur text-white border-b border-amber-800/60">
-    <div class="relative mx-auto max-w-content px-4 py-3 flex items-center gap-3">
-      <a href="/" class="font-semibold tracking-tight text-white hover:text-amber-200 transition-colors">BibleProject Plans</a>
-      <span class="mobile-hide hidden sm:inline text-amber-100">· OT + NT with videos</span>
-      <button id="menu-button" aria-expanded="false" aria-controls="main-nav" class="ml-auto flex items-center gap-1 rounded-md px-2 py-1 text-sm text-amber-100 ring-1 ring-white/20 sm:hidden">
+<body class="min-h-full bg-white text-gray-900 leading-relaxed antialiased selection:bg-blue-100 selection:text-blue-900">
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-200">
+    <div class="relative mx-auto max-w-content px-4 py-4 flex items-center gap-3">
+      <a href="/" class="font-semibold text-lg tracking-tight text-gray-900 hover:text-blue-600 transition-colors">BibleProject Plans</a>
+      <span class="mobile-hide hidden sm:inline text-gray-500 text-sm">· OT + NT with videos</span>
+      <button id="menu-button" aria-expanded="false" aria-controls="main-nav" class="ml-auto flex items-center gap-1 rounded-lg px-3 py-2 text-sm text-gray-600 ring-1 ring-gray-300 hover:ring-gray-400 sm:hidden transition-colors">
         <span>Menu</span>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
           <path d="M2 4h12v1H2V4zm0 3.5h12v1H2v-1zM2 11h12v1H2v-1z"/>
         </svg>
       </button>
-      <nav id="main-nav" class="hidden absolute top-full inset-x-4 mt-2 flex-col gap-2 rounded-md bg-amber-700/95 px-4 py-3 text-sm sm:static sm:ml-auto sm:mt-0 sm:flex sm:flex-row sm:gap-4 sm:bg-transparent sm:p-0">
-        <a class="text-amber-100 hover:text-white transition-colors" href="/">Home</a>
-        <a class="text-amber-100 hover:text-white transition-colors" href="/weeks/">Weeks</a>
-        <a class="inline-flex items-center gap-1 rounded-md bg-amber-500/90 px-2.5 py-1.5 text-white text-xs font-medium hover:bg-amber-400 transition-colors" href="/day/1/">Start</a>
+      <nav id="main-nav" class="hidden absolute top-full inset-x-4 mt-2 flex-col gap-2 rounded-xl bg-white shadow-lg border border-gray-200 px-4 py-3 text-sm sm:static sm:ml-auto sm:mt-0 sm:flex sm:flex-row sm:gap-6 sm:bg-transparent sm:shadow-none sm:border-0 sm:p-0">
+        <a class="text-gray-600 hover:text-gray-900 transition-colors font-medium" href="/">Home</a>
+        <a class="text-gray-600 hover:text-gray-900 transition-colors font-medium" href="/weeks/">Weeks</a>
+        <a class="inline-flex items-center gap-1 rounded-lg bg-blue-600 px-4 py-2 text-white text-sm font-medium hover:bg-blue-700 transition-colors shadow-sm" href="/day/1/">Start Reading</a>
       </nav>
     </div>
   </header>
-  <main class="mx-auto max-w-content px-4 py-8 md:py-10">
+  <main class="mx-auto max-w-content px-4 py-8 md:py-12">
     {{ content }}
   </main>
-  <footer class="mt-8 border-t border-amber-200">
-    <div class="mx-auto max-w-content px-4 py-6 text-xs text-amber-700 flex items-center justify-between">
+  <footer class="mt-16 border-t border-gray-200 bg-gray-50">
+    <div class="mx-auto max-w-content px-4 py-8 text-sm text-gray-600 flex items-center justify-between">
       <p>Built with Eleventy · Scripture data from BibleProject plans</p>
-      <a class="hover:text-amber-900 transition-colors" href="/">Back to top</a>
+      <a class="hover:text-gray-900 transition-colors" href="/">Back to top</a>
     </div>
   </footer>
   <script src="/assets/app.js" defer></script>
