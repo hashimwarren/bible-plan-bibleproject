@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if title %}{{ title }} · {% endif %}{{ site.title | default: "BibleProject Reading Plans" }}</title>
   <meta name="description" content="{{ description | default: site.description }}">
-  <meta name="theme-color" content="#0b6efd">
+  <meta name="theme-color" content="#ea580c">
   <meta property="og:title" content="{% if title %}{{ title }}{% else %}{{ site.title }}{% endif %}">
   <meta property="og:description" content="{{ description | default: site.description }}">
   <meta property="og:type" content="website">
@@ -26,25 +26,26 @@
   </script>
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
 </head>
-<body class="min-h-full bg-slate-50 text-slate-800 leading-relaxed selection:bg-blue-100 selection:text-slate-900">
-  <header class="sticky top-0 z-50 bg-slate-900/90 supports-[backdrop-filter]:bg-slate-900/80 backdrop-blur text-white border-b border-slate-800/60">
-    <div class="mx-auto max-w-content px-4 py-3 flex items-center gap-3">
-      <a href="/" class="font-semibold tracking-tight text-white hover:text-blue-200 transition-colors">BibleProject Plans</a>
-      <span class="text-slate-300">· OT + NT with videos</span>
-      <nav class="ml-auto flex items-center gap-4 text-sm">
-        <a class="text-slate-300 hover:text-white transition-colors" href="/">Home</a>
-        <a class="text-slate-300 hover:text-white transition-colors" href="/weeks/">Weeks</a>
-        <a class="inline-flex items-center gap-1 rounded-md bg-blue-600/90 px-2.5 py-1.5 text-white text-xs font-medium hover:bg-blue-500 transition-colors" href="/day/1/">Start</a>
+<body class="min-h-full bg-amber-50 text-slate-800 leading-relaxed selection:bg-amber-200 selection:text-slate-900">
+  <header class="sticky top-0 z-50 bg-amber-700/90 supports-[backdrop-filter]:bg-amber-700/80 backdrop-blur text-white border-b border-amber-800/60">
+    <div class="relative mx-auto max-w-content px-4 py-3 flex items-center gap-3">
+      <a href="/" class="font-semibold tracking-tight text-white hover:text-amber-200 transition-colors">BibleProject Plans</a>
+      <span class="hidden sm:inline text-amber-100">· OT + NT with videos</span>
+      <button id="menu-button" aria-expanded="false" aria-controls="main-nav" class="ml-auto flex items-center gap-1 rounded-md px-2 py-1 text-sm text-amber-100 ring-1 ring-white/20 sm:hidden">Menu</button>
+      <nav id="main-nav" class="hidden absolute top-full inset-x-4 mt-2 flex-col gap-2 rounded-md bg-amber-700/95 px-4 py-3 text-sm sm:static sm:ml-auto sm:mt-0 sm:flex sm:flex-row sm:gap-4 sm:bg-transparent sm:p-0">
+        <a class="text-amber-100 hover:text-white transition-colors" href="/">Home</a>
+        <a class="text-amber-100 hover:text-white transition-colors" href="/weeks/">Weeks</a>
+        <a class="inline-flex items-center gap-1 rounded-md bg-amber-500/90 px-2.5 py-1.5 text-white text-xs font-medium hover:bg-amber-400 transition-colors" href="/day/1/">Start</a>
       </nav>
     </div>
   </header>
   <main class="mx-auto max-w-content px-4 py-8 md:py-10">
     {{ content }}
   </main>
-  <footer class="mt-8 border-t border-slate-200">
-    <div class="mx-auto max-w-content px-4 py-6 text-xs text-slate-500 flex items-center justify-between">
+  <footer class="mt-8 border-t border-amber-200">
+    <div class="mx-auto max-w-content px-4 py-6 text-xs text-amber-700 flex items-center justify-between">
       <p>Built with Eleventy · Scripture data from BibleProject plans</p>
-      <a class="hover:text-slate-700 transition-colors" href="/">Back to top</a>
+      <a class="hover:text-amber-900 transition-colors" href="/">Back to top</a>
     </div>
   </footer>
   <script src="/assets/app.js" defer></script>
