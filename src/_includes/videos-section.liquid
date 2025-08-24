@@ -8,35 +8,35 @@
   - margin_top: Optional margin top class (default: "mt-6")
 {% endcomment %}
 
-<section class="{{ margin_top | default: 'mt-6' }}">
+<section class="{{ margin_top | default: 'mt-4' }}">
   {% assign heading_level = heading_level | default: "h2" %}
   {% if heading_level == "h2" %}
-    <h2 class="text-base font-semibold text-slate-900 mb-2.5">{{ heading | default: "Videos" }}</h2>
+    <h2 class="text-base font-semibold text-gray-900 mb-3">{{ heading | default: "Videos" }}</h2>
   {% elsif heading_level == "h3" %}
-    <h3 class="text-base font-semibold text-slate-900 mb-2.5">{{ heading | default: "Videos" }}</h3>
+    <h3 class="text-base font-semibold text-gray-900 mb-3">{{ heading | default: "Videos" }}</h3>
   {% endif %}
   
   {% if videos and videos.size > 0 %}
     <div class="{{ grid_classes | default: 'grid grid-cols-1 gap-3 sm:grid-cols-2' }} videos">
       {% for v in videos %}
-        <div class="rounded-lg overflow-hidden shadow ring-1 ring-slate-200 relative">
-          <div class="lazy-video w-full aspect-video bg-slate-100 flex items-center justify-center cursor-pointer" 
+        <div class="rounded-lg overflow-hidden shadow-sm border border-gray-200 relative bg-white">
+          <div class="lazy-video w-full aspect-video bg-gray-50 flex items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors" 
                data-src="{{ v }}"
                role="button"
                tabindex="0"
                aria-label="Load BibleProject Video">
             <div class="text-center">
-              <svg class="w-16 h-16 mx-auto text-slate-400 mb-2" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" />
+              <svg class="w-12 h-12 mx-auto text-gray-400 mb-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd" />
               </svg>
-              <p class="text-sm text-slate-600 font-medium">Click to load video</p>
-              <p class="text-xs text-slate-500">Saves bandwidth</p>
+              <p class="text-sm text-gray-700 font-medium">Click to load video</p>
+              <p class="text-xs text-gray-500">Saves bandwidth</p>
             </div>
           </div>
         </div>
       {% endfor %}
     </div>
   {% else %}
-    <p class="text-slate-500">No videos for this day.</p>
+    <p class="text-gray-500 text-sm">No videos for this day.</p>
   {% endif %}
 </section>

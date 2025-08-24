@@ -9,18 +9,18 @@
   - margin_top: Optional margin top class (default: "mt-6")
 {% endcomment %}
 
-<div class="{{ margin_top | default: 'mt-6' }} flex items-center justify-between">
+<div class="{{ margin_top | default: 'mt-8' }} flex items-center justify-between">
   <div>
     {% if current_number > 1 %}
       {% assign prev_number = current_number | minus: 1 %}
-      <a class="inline-flex items-center rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 hover:bg-slate-50" href="/{{ type }}/{{ prev_number }}/">
+      <a class="btn-secondary" href="/{{ type }}/{{ prev_number }}/">
         ← Previous{% if type == "week" %} Week{% endif %}
       </a>
     {% endif %}
   </div>
   
   {% if back_to_text and back_to_url %}
-    <a class="inline-flex items-center rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 hover:bg-slate-50" href="{{ back_to_url }}">{{ back_to_text }}</a>
+    <a class="btn-secondary" href="{{ back_to_url }}">{{ back_to_text }}</a>
   {% endif %}
   
   <div>
@@ -31,7 +31,7 @@
     
     {% if current_number < max_num %}
       {% assign next_number = current_number | plus: 1 %}
-      <a class="inline-flex items-center rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 hover:bg-slate-50" href="/{{ type }}/{{ next_number }}/">
+      <a class="btn-secondary" href="/{{ type }}/{{ next_number }}/">
         Next{% if type == "week" %} Week{% endif %} →
       </a>
     {% endif %}
