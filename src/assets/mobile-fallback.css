@@ -1,0 +1,192 @@
+/* Mobile-first fallback CSS for when Tailwind CDN fails to load */
+
+/* Basic responsive design fallbacks */
+@media (max-width: 640px) {
+  /* Mobile menu button - show on small screens */
+  #menu-button {
+    display: flex !important;
+    align-items: center;
+    gap: 0.25rem;
+    margin-left: auto;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    border-radius: 0.375rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    color: rgba(251, 191, 36, 0.7);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  #menu-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(251, 191, 36, 1);
+  }
+
+  /* Hidden subtitle on mobile */
+  .mobile-hide {
+    display: none !important;
+  }
+
+  /* Mobile navigation - hidden by default, shown when active */
+  #main-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 1rem;
+    right: 1rem;
+    margin-top: 0.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-radius: 0.375rem;
+    background: rgba(180, 83, 9, 0.95);
+    backdrop-filter: blur(8px);
+    padding: 1rem;
+    font-size: 0.875rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+  }
+
+  #main-nav.mobile-nav-open {
+    display: flex !important;
+  }
+
+  #main-nav a {
+    color: rgba(251, 191, 36, 0.8);
+    text-decoration: none;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: color 0.2s ease;
+  }
+
+  #main-nav a:last-child {
+    border-bottom: none;
+  }
+
+  #main-nav a:hover {
+    color: white;
+  }
+
+  /* Improved touch targets for mobile */
+  #main-nav a,
+  #menu-button {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* Show navigation normally on larger screens */
+@media (min-width: 641px) {
+  #menu-button {
+    display: none !important;
+  }
+
+  #main-nav {
+    display: flex !important;
+    position: static;
+    margin-left: auto;
+    margin-top: 0;
+    flex-direction: row;
+    gap: 1rem;
+    background: transparent;
+    padding: 0;
+    font-size: 0.875rem;
+    box-shadow: none;
+  }
+
+  #main-nav a {
+    color: rgba(251, 191, 36, 0.8);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  #main-nav a:hover {
+    color: white;
+  }
+
+  .mobile-hide {
+    display: inline !important;
+  }
+}
+
+/* Enhanced mobile layout improvements */
+@media (max-width: 640px) {
+  /* Better header spacing on mobile */
+  header .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Improve main content spacing */
+  main {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  /* Better typography for mobile */
+  h1 {
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    line-height: 1.3;
+  }
+
+  /* Improve touch targets for day cards */
+  .day-card,
+  .day-card a {
+    min-height: 60px;
+    padding: 0.75rem;
+  }
+
+  /* Better button sizes for mobile */
+  button,
+  .button,
+  input[type="submit"] {
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+
+  /* Improve form inputs for mobile */
+  input[type="text"],
+  input[type="search"],
+  select,
+  textarea {
+    min-height: 44px;
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+
+  /* Better footer spacing */
+  footer {
+    padding: 1.5rem 1rem;
+  }
+
+  footer .container {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+}
+
+/* Focus improvements for accessibility */
+#menu-button:focus,
+#main-nav a:focus {
+  outline: 2px solid rgba(251, 191, 36, 0.8);
+  outline-offset: 2px;
+}
+
+/* Loading state for when CSS is still loading */
+.css-loading #main-nav {
+  display: none;
+}
+
+.css-loading #menu-button {
+  display: flex;
+}

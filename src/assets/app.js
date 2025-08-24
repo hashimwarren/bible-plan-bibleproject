@@ -21,8 +21,55 @@
 
   // Mobile navigation toggle
   try {
-      nav?.classList.toggle('hidden', !expanded);
-    });
+    const menuButton = document.getElementById('menu-button');
+    const nav = document.getElementById('main-nav');
+    
+    if (menuButton && nav) {
+      menuButton.addEventListener('click', function() {
+        const expanded = menuButton.getAttribute('aria-expanded') === 'true';
+        const newExpanded = !expanded;
+        
+        // Update aria-expanded attribute
+        menuButton.setAttribute('aria-expanded', String(newExpanded));
+        
+        // Toggle navigation visibility with fallback classes
+        if (newExpanded) {
+          nav.classList.remove('hidden');
+          nav.classList.add('mobile-nav-open');
+        } else {
+          nav.classList.add('hidden');
+          nav.classList.remove('mobile-nav-open');
+        }
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!menuButton.contains(e.target) && !nav.contains(e.target)) {
+          menuButton.setAttribute('aria-expanded', 'false');
+          nav.classList.add('hidden');
+          nav.classList.remove('mobile-nav-open');
+        }
+      });
+
+      // Close menu when pressing escape
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') {
+          menuButton.setAttribute('aria-expanded', 'false');
+          nav.classList.add('hidden');
+          nav.classList.remove('mobile-nav-open');
+          menuButton.focus();
+        }
+      });
+
+      // Close menu when navigating to a new page
+      nav.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A') {
+          menuButton.setAttribute('aria-expanded', 'false');
+          nav.classList.add('hidden');
+          nav.classList.remove('mobile-nav-open');
+        }
+      });
+    }
   } catch {}
 
   const form = document.getElementById('scripture-form');
