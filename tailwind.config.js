@@ -8,20 +8,26 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: [
-          "ui-sans-serif",
-          "system-ui", 
-          "-apple-system",
-          "Segoe UI",
-          "Roboto",
-          "Helvetica Neue",
-          "Arial",
-          "Noto Sans",
-          "Apple Color Emoji",
-          "Segoe UI Emoji"
+          'Inter',
+          'Arial',
+          'sans-serif'
         ],
+        serif: [
+          'Merriweather',
+          'Georgia',
+          'serif'
+        ]
       },
-      maxWidth: { 
-        'content': '56rem' 
+      colors: {
+        'bg': '#FAFAF7',
+        'text-primary': '#222222',
+        'text-secondary': '#555555',
+        'accent-teal': '#0C5A65',
+        'accent-orange': '#D25B2D',
+        'border': '#E5E5E5'
+      },
+      maxWidth: {
+        'content': '56rem'
       },
     }
   },
