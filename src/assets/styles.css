@@ -2,6 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Design tokens */
+:root {
+  --color-bg: #FAFAF7;
+  --color-text-primary: #222222;
+  --color-text-secondary: #555555;
+  --color-accent-teal: #0C5A65;
+  --color-accent-orange: #D25B2D;
+  --color-border: #E5E5E5;
+
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-sans: 'Inter', Arial, sans-serif;
+
+  --font-size-h1: 32px;
+  --font-size-h2: 24px;
+  --font-size-h3: 18px;
+  --font-size-body: 16px;
+  --font-size-small: 14px;
+
+  --radius: 2px;
+  --transition: 0.15s ease-in-out;
+}
+
+@layer base {
+  body {
+    @apply bg-bg text-text-primary font-sans;
+  }
+  h1 {
+    @apply font-serif font-bold text-[32px];
+  }
+  h2 {
+    @apply font-serif text-[24px];
+  }
+  h3 {
+    @apply font-sans font-light text-[18px];
+  }
+  a {
+    @apply text-accent-teal underline hover:no-underline;
+  }
+  small {
+    @apply text-[14px] text-text-secondary;
+  }
+}
+
 /* Performance-optimized utilities */
 @layer utilities {
   .scroll-smooth {
@@ -20,18 +63,18 @@
 /* Button component styles */
 @layer components {
   .btn {
-    @apply inline-flex items-center rounded-md px-3 py-2 text-sm font-medium shadow-sm transition-colors;
+    @apply inline-flex items-center rounded-sm px-3 py-2 text-sm font-medium transition-colors;
   }
 
   .btn:focus {
-    @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+    @apply outline-none ring-2 ring-accent-teal ring-offset-2;
   }
 
   .btn-primary {
-    @apply btn bg-blue-600 text-white hover:bg-blue-500;
+    @apply btn bg-accent-teal text-white hover:bg-accent-teal/90;
   }
 
   .btn-secondary {
-    @apply btn bg-amber-500/90 text-white hover:bg-amber-400;
+    @apply btn border border-border bg-transparent text-text-primary hover:bg-border;
   }
 }

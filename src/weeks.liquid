@@ -5,19 +5,19 @@ description: "A weekly overview of the BibleProject reading plan."
 permalink: "/weeks/"
 ---
 <header class="mb-5 md:mb-6">
-  <h1 class="text-2xl md:text-[28px] font-semibold tracking-tight text-slate-900">Weekly Reading Plan</h1>
-  <p class="mt-1 text-slate-600">A weekly overview of the BibleProject reading plan.</p>
+  <h1>Weekly Reading Plan</h1>
+  <p class="mt-1 text-text-secondary">A weekly overview of the BibleProject reading plan.</p>
 </header>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
   {% for week in plan.weeks %}
     <a
       href="/week/{{ week.weekNumber }}/"
-      class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm hover:border-blue-500 hover:bg-blue-50"
+      class="border border-border p-4 rounded-sm hover:bg-border"
     >
-      <div class="font-semibold text-slate-900">Week {{ week.weekNumber }}</div>
-      <div class="text-sm text-slate-500">Days {{ week.days[0].day }}-{{ week.days.last.day }}</div>
-      {% if week.hasJustice %}<div class="mt-1 text-xs text-slate-500" title="This week contains a justice-themed scripture">⭐ Justice</div>{% endif %}
+      <div class="font-semibold">Week {{ week.weekNumber }}</div>
+      <div class="text-sm text-text-secondary">Days {{ week.days[0].day }}-{{ week.days.last.day }}</div>
+      {% if week.hasJustice %}<div class="mt-1 text-xs text-text-secondary" title="This week contains a justice-themed scripture">⭐ Justice</div>{% endif %}
     </a>
   {% endfor %}
 </div>

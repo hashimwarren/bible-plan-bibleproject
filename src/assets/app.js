@@ -239,16 +239,16 @@
 
     function createDayCard(day) {
       return `
-        <div class="rounded-lg border border-slate-200 bg-white p-3 shadow-sm hover:shadow transition-shadow">
+        <div class="border border-border p-3 rounded-sm">
           <div class="flex items-center justify-between">
-            <div class="font-medium text-slate-900">Day ${day.day}</div>
+            <div class="font-medium">Day ${day.day}</div>
             <div class="flex items-center gap-1.5">
               ${day.hasJustice ? '<span class="text-sm" title="Justice scripture present">⭐</span>' : ''}
               ${day.hasVideos ? '<span class="text-sm" title="Has video">🎬</span>' : ''}
             </div>
           </div>
-          <div class="mt-1 text-sm text-slate-600">OT: ${day.otReading}</div>
-          <div class="text-sm text-slate-600">NT: ${day.ntReading}</div>
+          <div class="mt-1 text-sm text-text-secondary">OT: ${day.otReading}</div>
+          <div class="text-sm text-text-secondary">NT: ${day.ntReading}</div>
           <div class="mt-2"><a class="btn-primary" href="/day/${day.day}/">Open Day</a></div>
         </div>
       `;
