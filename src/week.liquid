@@ -11,20 +11,20 @@ permalink: "/week/{{ w.weekNumber }}/"
 ---
 {% assign week = w %}
 <header class="mb-5 md:mb-6">
-  <h1 class="text-2xl md:text-[28px] font-semibold tracking-tight text-slate-900">Week {{ week.weekNumber }}{% if week.hasJustice %} <span class="align-middle text-base" title="Justice scripture present">⭐</span>{% endif %}</h1>
-  <p class="mt-1 text-slate-600">Old Testament and New Testament readings for the week.</p>
+  <h1>Week {{ week.weekNumber }}{% if week.hasJustice %} <span class="align-middle text-base" title="Justice scripture present">⭐</span>{% endif %}</h1>
+  <p class="mt-1 text-text-secondary">Old Testament and New Testament readings for the week.</p>
   <div class="mt-2.5 flex items-center gap-3 text-sm">
-    {% if week.weekNumber > 1 %}<a class="text-slate-600 hover:text-slate-900 inline-flex items-center gap-1" href="/week/{{ week.weekNumber | minus: 1 }}/">← Previous Week</a>{% endif %}
-    <span class="text-slate-300">|</span>
-    {% if week.weekNumber < 53 %}<a class="text-slate-600 hover:text-slate-900 inline-flex items-center gap-1" href="/week/{{ week.weekNumber | plus: 1 }}/">Next Week →</a>{% endif %}
+    {% if week.weekNumber > 1 %}<a class="hover:underline inline-flex items-center gap-1" href="/week/{{ week.weekNumber | minus: 1 }}/">← Previous Week</a>{% endif %}
+    <span class="text-text-secondary">|</span>
+    {% if week.weekNumber < 53 %}<a class="hover:underline inline-flex items-center gap-1" href="/week/{{ week.weekNumber | plus: 1 }}/">Next Week →</a>{% endif %}
   </div>
 </header>
 
 <div class="space-y-8">
 {% for day in week.days %}
-<article class="border-t border-slate-200 pt-8">
+<article class="border-t border-border pt-8">
   <header class="flex items-center justify-between">
-    <h2 class="text-xl font-semibold text-slate-800">
+    <h2 class="text-xl font-semibold">
       <a href="/day/{{ day.day }}/" class="hover:underline">Day {{ day.day }}{% if day.hasJustice %} <span class="align-middle text-base" title="Justice scripture present">⭐</span>{% endif %}</a>
     </h2>
   </header>

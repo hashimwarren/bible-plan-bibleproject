@@ -6,13 +6,13 @@
 {% endcomment %}
 
 {% if justice_refs and justice_refs.size > 0 %}
-<section class="prose prose-slate max-w-none {{ margin_top | default: 'mt-5' }}">
+<section class="prose max-w-none {{ margin_top | default: 'mt-5' }}">
   <h2>Justice Scriptures</h2>
   <ul class="not-prose list-disc pl-5 space-y-1">
     {% for ref in justice_refs %}
-      <li class="text-slate-700">{{ ref }}</li>
+      <li>{{ ref }}</li>
     {% endfor %}
   </ul>
-  <p class="text-slate-500 text-sm">These are justice-related verses that fall within today's Old Testament chapters.</p>
+  <p class="text-text-secondary text-sm">These are justice-related verses that fall within today's Old Testament chapters.</p>
 </section>
 {% endif %}

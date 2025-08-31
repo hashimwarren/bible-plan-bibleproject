@@ -7,19 +7,19 @@
   - no_reading_text: Text to show when no readings (default: "No reading.")
 {% endcomment %}
 
-<section class="prose prose-slate max-w-none{% if margin_top %} {{ margin_top }}{% endif %}">
+<section class="prose max-w-none{% if margin_top %} {{ margin_top }}{% endif %}">
   <h2>{{ heading }}</h2>
   {% if readings and readings.size > 0 %}
     <ul class="not-prose list-disc pl-5 space-y-1">
       {% for ref in readings %}
-        <li class="text-slate-700">{{ ref }}</li>
+        <li>{{ ref }}</li>
       {% endfor %}
     </ul>
   {% else %}
-    <p class="text-slate-500">{{ no_reading_text | default: "No reading." }}</p>
+    <p class="text-text-secondary">{{ no_reading_text | default: "No reading." }}</p>
   {% endif %}
   
   {% if url %}
-    <p><a class="text-blue-600 hover:text-blue-700 underline underline-offset-2" href="{{ url }}" target="_blank" rel="noopener">Read on Bible.com</a></p>
+    <p><a class="text-accent-teal underline" href="{{ url }}" target="_blank" rel="noopener">Read on Bible.com</a></p>
   {% endif %}
 </section>
