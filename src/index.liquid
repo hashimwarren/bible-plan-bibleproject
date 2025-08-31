@@ -10,15 +10,15 @@ permalink: "/"
 {% assign this_week = plan.weeks | where: "weekNumber", current_week | first %}
 
 <header class="mb-5 md:mb-6">
-  <h1 class="text-2xl md:text-[28px] font-semibold tracking-tight text-slate-900">BibleProject Reading Plans</h1>
-  <p class="mt-1.5 text-slate-600">Today's reading and this week's plan, or <a class="text-blue-600 hover:text-blue-700 underline underline-offset-2" href="/weeks/">view by week</a>, or jump directly by scripture reference.</p>
+  <h1 class="font-serif text-h1 font-bold">BibleProject Reading Plans</h1>
+  <p class="mt-1.5 text-secondary">Today's reading and this week's plan, or <a class="text-accent-teal" href="/weeks/">view by week</a>, or jump directly by scripture reference.</p>
 </header>
 
 <section class="mb-6">
   <form id="scripture-form" action="/day/" method="get" class="flex flex-wrap items-center gap-3">
-    <label for="scripture" class="text-sm font-medium text-slate-700">Find a scripture:</label>
+    <label for="scripture" class="text-small font-medium text-primary">Find a scripture:</label>
     <div class="flex-1 min-w-[260px] max-w-xl">
-      <input id="scripture" name="q" type="text" placeholder="e.g., James 1 or Genesis 1" autocomplete="off" class="block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" />
+      <input id="scripture" name="q" type="text" placeholder="e.g., James 1 or Genesis 1" autocomplete="off" class="block w-full rounded-[2px] border-border focus:border-accent-teal focus:ring-accent-teal" />
     </div>
     <button class="btn-primary" type="submit">Go</button>
   </form>
@@ -28,10 +28,10 @@ permalink: "/"
 <!-- Today's Reading -->
 {% if today_reading %}
 <section class="mb-8">
-  <h2 class="text-lg font-semibold text-slate-900 mb-3">Today's Reading - Day {{ current_day }}</h2>
-  <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4 md:p-5">
+  <h2 class="font-serif text-h2 mb-3">Today's Reading - Day {{ current_day }}</h2>
+  <div class="p-4 md:p-5">
     <div class="flex items-center justify-between mb-3">
-      <div class="font-medium text-slate-900 text-lg">Day {{ today_reading.day }}</div>
+      <div class="font-bold">Day {{ today_reading.day }}</div>
       <div class="flex items-center gap-1.5">
         {% if today_reading.hasJustice %}<span class="text-base" title="Justice scripture present">⭐</span>{% endif %}
         {% if today_reading.videos and today_reading.videos.size > 0 %}<span class="text-base" title="Has video">🎬</span>{% endif %}
@@ -50,9 +50,9 @@ permalink: "/"
 </section>
 {% elsif current_day > 365 %}
 <section class="mb-8">
-  <h2 class="text-lg font-semibold text-slate-900 mb-3">Reading Plan Completed! 🎉</h2>
-  <div class="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-4 md:p-5">
-    <p class="text-slate-700 mb-4">Congratulations! You've completed the 365-day reading plan. The plan covers days 1-365, and today would be day {{ current_day }}.</p>
+  <h2 class="font-serif text-h2 mb-3">Reading Plan Completed! 🎉</h2>
+  <div class="p-4 md:p-5">
+    <p class="mb-4 text-secondary">Congratulations! You've completed the 365-day reading plan. The plan covers days 1-365, and today would be day {{ current_day }}.</p>
     <div class="space-y-2">
       <a class="btn-primary" href="/day/365/">View Final Day (Day 365)</a>
       <a class="btn-secondary ml-2" href="/day/1/">Start Over (Day 1)</a>
@@ -61,9 +61,9 @@ permalink: "/"
 </section>
 {% else %}
 <section class="mb-8">
-  <h2 class="text-lg font-semibold text-slate-900 mb-3">Today's Reading - Day {{ current_day }}</h2>
-  <div class="bg-gradient-to-r from-yellow-50 to-amber-50 border border-yellow-200 rounded-lg p-4 md:p-5">
-    <p class="text-slate-700 mb-4">No reading found for day {{ current_day }}. This might be due to data not being available.</p>
+  <h2 class="font-serif text-h2 mb-3">Today's Reading - Day {{ current_day }}</h2>
+  <div class="p-4 md:p-5">
+    <p class="mb-4 text-secondary">No reading found for day {{ current_day }}. This might be due to data not being available.</p>
     <div class="space-y-2">
       <a class="btn-primary" href="/day/1/">Go to Day 1</a>
       <a class="btn-secondary ml-2" href="/weeks/">Browse by Week</a>
@@ -75,22 +75,21 @@ permalink: "/"
 <!-- This Week's Readings -->
 {% if this_week %}
 <section class="mb-8">
-  <h2 class="text-lg font-semibold text-slate-900 mb-3">This Week - Week {{ current_week }}</h2>
+  <h2 class="font-serif text-h2 mb-3">This Week - Week {{ current_week }}</h2>
   <div class="space-y-3">
     {% for day in this_week.days %}
-      <div class="rounded-lg border border-slate-200 bg-white p-3 {% if day.day == current_day %}ring-2 ring-blue-200 bg-blue-50{% endif %}">
+      <div class="p-3">
         <div class="flex items-center justify-between">
-          <div class="font-medium text-slate-900">
-            {% if day.day == current_day %}📍 {% endif %}Day {{ day.day }}
-            {% if day.day == current_day %}<span class="text-sm text-blue-600 font-normal">(Today)</span>{% endif %}
+          <div class="font-medium">
+            {% if day.day == current_day %}<span class="font-semibold underline decoration-accent-orange">Day {{ day.day }}</span> <span class="text-accent-orange text-small">(Today)</span>{% else %}Day {{ day.day }}{% endif %}
           </div>
           <div class="flex items-center gap-1.5">
             {% if day.hasJustice %}<span class="text-sm" title="Justice scripture present">⭐</span>{% endif %}
             {% if day.videos and day.videos.size > 0 %}<span class="text-sm" title="Has video">🎬</span>{% endif %}
           </div>
         </div>
-        <div class="mt-1 text-sm text-slate-600">OT: {% if day.otReadings.size > 0 %}{{ day.otReadings | join: "; " }}{% else %}-{% endif %}</div>
-        <div class="text-sm text-slate-600">NT: {% if day.ntReadings.size > 0 %}{{ day.ntReadings | join: "; " }}{% else %}-{% endif %}</div>
+        <div class="mt-1 text-sm text-secondary">OT: {% if day.otReadings.size > 0 %}{{ day.otReadings | join: "; " }}{% else %}-{% endif %}</div>
+        <div class="text-sm text-secondary">NT: {% if day.ntReadings.size > 0 %}{{ day.ntReadings | join: "; " }}{% else %}-{% endif %}</div>
         <div class="mt-2">
           <a class="{% if day.day == current_day %}btn-primary{% else %}btn-secondary{% endif %}" href="/day/{{ day.day }}/">Open Day</a>
         </div>
@@ -103,9 +102,9 @@ permalink: "/"
 </section>
 {% elsif current_week > 53 %}
 <section class="mb-8">
-  <h2 class="text-lg font-semibold text-slate-900 mb-3">Week {{ current_week }} - Beyond Plan</h2>
-  <div class="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-lg p-4 md:p-5">
-    <p class="text-slate-700 mb-4">You're beyond the 53-week reading plan! The plan covers weeks 1-53.</p>
+  <h2 class="font-serif text-h2 mb-3">Week {{ current_week }} - Beyond Plan</h2>
+  <div class="p-4 md:p-5">
+    <p class="mb-4 text-secondary">You're beyond the 53-week reading plan! The plan covers weeks 1-53.</p>
     <div class="space-y-2">
       <a class="btn-primary" href="/week/53/">View Final Week (Week 53)</a>
       <a class="btn-secondary ml-2" href="/week/1/">Start Over (Week 1)</a>
@@ -114,20 +113,20 @@ permalink: "/"
 </section>
 {% endif %}
 
-<h2 class="text-base font-semibold text-slate-900 mb-2.5">All Days</h2>
+<h2 class="font-serif text-h2 mb-2.5">All Days</h2>
 <div id="days-grid" class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
   {% assign days_to_show = plan.days | slice: 0, 30 %}
   {% for d in days_to_show %}
-    <div class="rounded-lg border border-slate-200 bg-white p-3 shadow-sm hover:shadow transition-shadow">
+    <div class="p-3">
       <div class="flex items-center justify-between">
-        <div class="font-medium text-slate-900">Day {{ d.day }}</div>
+        <div class="font-medium">Day {{ d.day }}</div>
         <div class="flex items-center gap-1.5">
           {% if d.hasJustice %}<span class="text-sm" title="Justice scripture present">⭐</span>{% endif %}
           {% if d.videos and d.videos.size > 0 %}<span class="text-sm" title="Has video">🎬</span>{% endif %}
         </div>
       </div>
-      <div class="mt-1 text-sm text-slate-600">OT: {% if d.otReadings.size > 0 %}{{ d.otReadings[0] }}{% else %}-{% endif %}</div>
-      <div class="text-sm text-slate-600">NT: {% if d.ntReadings.size > 0 %}{{ d.ntReadings[0] }}{% else %}-{% endif %}</div>
+      <div class="mt-1 text-sm text-secondary">OT: {% if d.otReadings.size > 0 %}{{ d.otReadings[0] }}{% else %}-{% endif %}</div>
+      <div class="text-sm text-secondary">NT: {% if d.ntReadings.size > 0 %}{{ d.ntReadings[0] }}{% else %}-{% endif %}</div>
       <div class="mt-2"><a class="btn-primary" href="/day/{{ d.day }}/">Open Day</a></div>
     </div>
   {% endfor %}
@@ -137,8 +136,8 @@ permalink: "/"
   <button id="load-more-days" class="btn-secondary" data-loaded="30" data-total="{{ plan.days.size }}">
     Load More Days ({{ plan.days.size | minus: 30 }} remaining)
   </button>
-  <div class="mt-2 text-sm text-slate-600">
-    Or <a class="text-blue-600 hover:text-blue-700 underline underline-offset-2" href="/weeks/">view by week</a> for faster browsing
+  <div class="mt-2 text-sm text-secondary">
+    Or <a class="text-accent-teal" href="/weeks/">view by week</a> for faster browsing
   </div>
 </div>
 
