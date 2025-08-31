@@ -2,6 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Design system tokens */
+:root {
+  /* Colors */
+  --color-bg: #FAFAF7;
+  --color-text-primary: #222222;
+  --color-text-secondary: #555555;
+  --color-accent-teal: #0C5A65;
+  --color-accent-orange: #D25B2D;
+  --color-border: #E5E5E5;
+
+  /* Typography */
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-sans: 'Inter', Arial, sans-serif;
+
+  --font-size-h1: 32px;
+  --font-size-h2: 24px;
+  --font-size-h3: 18px;
+  --font-size-body: 16px;
+  --font-size-small: 14px;
+
+  /* Components */
+  --radius: 2px;
+  --transition: 0.15s ease-in-out;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--font-size-body);
+  line-height: 1.6;
+}
+
+h1 {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-h1);
+  font-weight: 700;
+}
+
+h2 {
+  font-family: var(--font-serif);
+  font-size: var(--font-size-h2);
+}
+
+h3 {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-h3);
+  font-weight: 300;
+}
+
+a {
+  color: var(--color-accent-teal);
+  text-decoration: underline;
+  transition: color var(--transition);
+}
+
+a:hover {
+  color: #094650;
+}
+
+small, .text-small {
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+}
+
 /* Performance-optimized utilities */
 @layer utilities {
   .scroll-smooth {
@@ -20,18 +85,19 @@
 /* Button component styles */
 @layer components {
   .btn {
-    @apply inline-flex items-center rounded-md px-3 py-2 text-sm font-medium shadow-sm transition-colors;
+    @apply inline-flex items-center px-3 py-2 text-sm font-medium transition-colors;
+    border-radius: var(--radius);
   }
 
   .btn:focus {
-    @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+    @apply outline-none ring-2 ring-accent-teal ring-offset-2;
   }
 
   .btn-primary {
-    @apply btn bg-blue-600 text-white hover:bg-blue-500;
+    @apply btn bg-accent-teal text-white hover:bg-accent-teal/90;
   }
 
   .btn-secondary {
-    @apply btn bg-amber-500/90 text-white hover:bg-amber-400;
+    @apply btn border border-border text-primary bg-transparent hover:bg-border/20;
   }
 }
